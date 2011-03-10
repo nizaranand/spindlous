@@ -1,0 +1,4 @@
+#!/usr/bin/env php
+define('BASEPATH','.'); // mockup that this app was executed from ci ;)
+chdir(dirname(__FILE__));
+include('doctrine.php');
