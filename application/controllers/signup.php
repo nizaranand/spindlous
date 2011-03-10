@@ -18,11 +18,9 @@ class Signup extends CI_Controller {
 		
 		if ($this->_submit_validate() === FALSE) {
 			$this->index();
-			return;
+			return false;
 		} else { 
-			$this->load->view('submit_success');			
-			$this->load->model('user');
-			
+			$this->load->view('submit_success');		
 			$u = new User();						
 			$u->signup();
 

@@ -1,6 +1,4 @@
-<?php
-
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 if ( ! function_exists('get_salt'))
 {
@@ -18,11 +16,11 @@ if ( ! function_exists('get_salt'))
     }   
 }
 
-if ( ! function_exists('encrypt'))
+if ( ! function_exists('encrypt_pw'))
 {
-    function encrypt($user)
+    function encrypt_pw($password, $salt)
     {
-        return substr( crypt( $user->password , '$2a$07$' . $user->salt . '$'), 28, 32);
+        return substr( crypt( $password , '$2a$07$' . $salt . '$'), 28, 32);
     }   
 }
 

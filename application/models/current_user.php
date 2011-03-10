@@ -10,13 +10,14 @@ class Current_User {
 		if(!isset(self::$user)) {
 
 			$CI =& get_instance();
-            $CI->load->library('session');
 			
 			if (!$user_id = $CI->session->userdata('user_id')) {
 				return FALSE;
 			}
 			
-			if (!$u = Doctrine::getTable('User')->find($user_id)) {
+			$q = $CI->db->query('select user_id from users where user_id = "'.$user_id.'" limit = 1');
+			
+			if (!$u = get_user($user_id)) {
                 return FALSE;
             }
 	
@@ -28,26 +29,43 @@ class Current_User {
 	
 	public static function login($username, $password) {
 		
-		if ($u = Doctrine::getTable('User')->findOneByUsername($username)) {
-			
-			$u_input = new User();
-			$u_input->password = $password;
+		$CI =& get_instance();
+		$CI->load->helper('encryption_helper');
+		
+		$q = $CI->db->query("select user_id, password, salt from users where username = '".$username."' limit 1");
+		
+		if ($q->num_rows() == 1) {			
 						
-			if($u->password == encrypt($u_input->password)) {
-				unset($u_input);
+			if($q->row()->password == encrypt_pw($password, $q->row()->salt)) {
 				
-				$CI =& get_instance();
-				$CI->load->library('session');
-				$CI->session->set_userdata('user_id',$u->id);
+				$u = new User();
+				$u->user_id = $q->row()->user_id;
+				$u->username = $username;
+				
+				
+				$CI->session->set_userdata('user',$u);
 				self::$user = $u;
 				
 				return true;
 			}
-			
-			unset($u_input);
 		}
 		
 		return false;		
+	}
+	
+	public static function get_user($user_id) {
+	
+		$CI =& get_instance();
+	
+		$q = $CI->db->query('select username from users where user_id = "'.$user_id.'" limit = 1');
+		if($q->num_rows() == 1) {
+			$u = New User;
+			$u->username = $q->row()->username;
+			$u->user_id = $user_id; 
+			
+			return $u;
+		}
+		return FALSE;	
 	}
 
 	public function __clone() {
