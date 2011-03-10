@@ -1,16 +1,16 @@
 body {
-	font-family: "Trebuchet MS",Arial;
+	font-family:Arial;
 	font-size: 14px;
-	background-color: #212426;
-	color: #B9AA81;
+	background-color: #E6E8FA;
+	color: #aaaaaa;
 }
 
 a {
-	color: #FFF;
+	color: #FFCA40;
 }
 
 a:hover {
-	color: #B9AA81;
+	color: #aaaaaa;
 }
 
 input, textarea, select {
@@ -32,12 +32,12 @@ input, textarea, select {
 	text-align: center;
 	font-size: 22px;
 	font-weight: bold;
-	color: #B9AA81;
+	color: #aaaaaa;
 }
 
 #signup_form form {
 
-	background-color: #B9AA81;
+	background-color: #4380D3;
 	padding: 10px;
 
 	border-radius: 8px;
@@ -47,7 +47,6 @@ input, textarea, select {
 }
 
 #signup_form form label {
-	font-weight: bold;
 	color: #11151E;
 }
 
