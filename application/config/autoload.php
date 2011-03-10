@@ -27,7 +27,6 @@
 |
 */
 
-$autoload['plugin'] = array('doctrine');
 
 
 /*
