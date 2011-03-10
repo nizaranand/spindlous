@@ -15,9 +15,9 @@ class Current_User {
 				return FALSE;
 			}
 			
-			$q = $CI->db->query('select user_id from users where user_id = "'.$user_id.'" limit = 1');
+			$q = $CI->db->query('select user_id from users where user_id = "'.$user_id.'" limit 1');
 			
-			if (!$u = get_user($user_id)) {
+			if (!$u = Current_User::get_user($user_id)) {
                 return FALSE;
             }
 	
@@ -43,7 +43,7 @@ class Current_User {
 				$u->username = $username;
 				
 				
-				$CI->session->set_userdata('user',$u);
+				$CI->session->set_userdata('user_id',$u->user_id);
 				self::$user = $u;
 				
 				return true;
@@ -57,7 +57,7 @@ class Current_User {
 	
 		$CI =& get_instance();
 	
-		$q = $CI->db->query('select username from users where user_id = "'.$user_id.'" limit = 1');
+		$q = $CI->db->query('select username from users where user_id = "'.$user_id.'" limit 1');
 		if($q->num_rows() == 1) {
 			$u = New User;
 			$u->username = $q->row()->username;

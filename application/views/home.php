@@ -9,7 +9,6 @@
 <body>
 
 <div>
-
 	<?php if(Current_User::user()): ?>
 		<h2>Hello <em><?php echo Current_User::user()->username; ?></em>.</h2>
 		<h2><?php echo anchor('logout','Logout'); ?></h2>
