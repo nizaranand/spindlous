@@ -9,14 +9,6 @@
 <body>
 
 <div>
-	<?php if(Current_User::user()): ?>
-		<h2>Hello <em><?php echo Current_User::user()->username; ?></em>.</h2>
-		<h2><?php echo anchor('logout','Logout'); ?></h2>
-	<?php else: ?>
-		<h2>New Users: <?php echo anchor('signup','Create an Account'); ?>.</h2>
-		<h2>Members: <?php echo anchor('login','Login'); ?>.</h2>
-	<?php endif; ?>
-
 </div>
 
 </body>

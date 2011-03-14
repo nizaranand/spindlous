@@ -15,7 +15,8 @@ class Current_User {
 				return FALSE;
 			}
 			
-			$q = $CI->db->query('select user_id from users where user_id = "'.$user_id.'" limit 1');
+			$sql = "select user_id from users where user_id = ? limit 1";
+			$q = $CI->db->query($sql, $user_id);
 			
 			if (!$u = Current_User::get_user($user_id)) {
                 return FALSE;
@@ -32,7 +33,8 @@ class Current_User {
 		$CI =& get_instance();
 		$CI->load->helper('encryption_helper');
 		
-		$q = $CI->db->query("select user_id, password, salt from users where username = '".$username."' limit 1");
+		$sql = "select user_id, password, salt from users where username = ? limit 1";
+		$q = $CI->db->query($sql, $username);
 		
 		if ($q->num_rows() == 1) {			
 						
@@ -57,7 +59,8 @@ class Current_User {
 	
 		$CI =& get_instance();
 	
-		$q = $CI->db->query('select username from users where user_id = "'.$user_id.'" limit 1');
+		$sql = "select username from users where user_id = ? limit 1";
+		$q = $CI->db->query($sql, $user_id);
 		if($q->num_rows() == 1) {
 			$u = New User;
 			$u->username = $q->row()->username;
@@ -71,6 +74,6 @@ class Current_User {
 	public function __clone() {
 		trigger_error('Clone is not allowed.', E_USER_ERROR);
 	}
-
+	
 }
 ?>

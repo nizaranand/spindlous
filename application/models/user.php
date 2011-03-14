@@ -32,13 +32,22 @@ class User extends CI_Model {
 		
 		$this->db->insert('users', $data);
 		
-		$q = $this->db->query("select user_id from users where username = '".$username."'");
+		$sql = "select user_id from users where username = ?";
+		$q = $this->db->query($sql, $username);
 		$user_id = $q->row()->user_id;
 		
 		$this->session->set_userdata('user', $this);
 		
 		return $this;		
 	}
+	
+	public function get_id() {
+	
+		
+	
+	}
+	
+	
 		
 }
 

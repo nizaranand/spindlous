@@ -5,8 +5,105 @@ body {
 	color: #aaaaaa;
 }
 
+#top-bar {
+	width: 100%;
+	margin: 0px;
+	position:absolute;
+	top: 0;
+	left: 0;
+	padding: 0px
+	height: 40px;
+	display: block;
+	text-align: center;
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.24, rgb(36,36,36)),
+		color-stop(0.62, rgb(66,66,66))
+		);
+
+}
+
+#spindlous {
+	float: left;
+	width: 25%;
+	font-size:18px;
+	margin: 0px;
+	padding: 0px;
+}
+
+#spindlous p{
+	margin: 0px;
+	padding: 10px;
+}
+
+#spindlous a {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+#spindlous a:visited {
+	text-decoration:none;
+}
+#spindlous a:hover {
+	text-decoration:none;
+}
+#spindlous a:active {
+	text-decoration:none;
+}
+#spindlous a:link {
+	text-decoration:none;
+}
+
+#container1 {
+	float: left;
+	width: 75%;
+}
+
+#container2 {
+	float: right;
+	width: 25%;
+}
+
+#container3 {
+	float: right;
+	width: 75%;
+}
+
+#user_control_box{
+	float: left;
+	width: 50%;
+}
+
+#logout {
+	float: right;
+	width: 50%;
+}
+
+#spool {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	width: 700px;
+	background-color: #FFFFFF;
+	color: #000000;
+	font-size: 14px;
+	position: relative;
+	
+	border: 1px solid #000000;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+
+}
+
+
+
 a {
 	color: #FFCA40;
+	font-weight: bold;
 }
 
 a:hover {
