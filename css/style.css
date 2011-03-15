@@ -24,6 +24,19 @@ body {
 		);
 
 }
+#spindlet-input {
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
+#spindlet-input form input[type=textarea] {
+	padding: 8px;
+	border: 1px solid #040404;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
 
 #spindlous {
 	float: left;

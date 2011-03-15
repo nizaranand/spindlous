@@ -112,7 +112,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('user');
+$autoload['model'] = array('user', 'spindlet', 'spindle_uri');
 require_once('application/models/current_user.php');
 
 
