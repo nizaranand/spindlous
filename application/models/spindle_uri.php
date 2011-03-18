@@ -11,11 +11,15 @@ Class Spindle_uri extends CI_Model {
 
 		if ($uri_id = $this->get_by_url($url)) {			
 			
+			$n = $this->get_num_saved($uri_id);
+			$n++;		
+			
+			$this->db->query('update uris set number_saved = ? where uri_id = ?', array($n, $uri_id));
 			return $uri_id;
 			
 		} else {
 					  
-			$this->db->insert('uris', array('url' => $url));
+			$this->db->insert('uris', array('url' => $url, 'number_saved' => 1));
 			return $this->get_by_url($url);
 			
 		}
@@ -45,5 +49,18 @@ Class Spindle_uri extends CI_Model {
 		}						  
 		return FALSE;
 		
-	}	
+	}
+	
+	function get_num_saved($uri_id) {
+		
+		$sql = "select number_saved from uris where uri_id = ? limit 1";
+		$q = $this->db->query($sql, $uri_id);
+		
+		if($q->num_rows() == 1) {
+		
+			return $q->row('number_saved');
+		}						  
+		return FALSE;
+		
+	}
 }

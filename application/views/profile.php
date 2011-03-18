@@ -1,5 +1,3 @@
-<?php if (!$u = Current_user::user()) {$this->load->view('welcome_page'); }?>
-
 <div id="spool">
 
 	<div id = "link-input">

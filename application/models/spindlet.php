@@ -14,19 +14,17 @@ Class Spindlet extends CI_Model {
 	
 		$url = $this->input->post('url');
 		$uri_id = $l->create($url);
-		$user_id = $u->user_id;
-		$title = $this->input->post('title');
-		$description = $this->input->post('description');	
 	
 		$this->db->insert('spindlets', array('uri_id' => $uri_id,
-											 'user_id' => $user_id,
-											 'title' => $title,
-											 'description' => $description));
+											 'user_id' => $u->user_id,
+											 'title' => $this->input->post('title'),
+											 'description' => $this->input->post('description'),
+											 'time_created' => date('Y-m-d H:i:s')));
 	
 	}
 	
 	public function spool_by_user($username)	{
-		$sql = "select uris.url, spindlets.title, spindlets.description
+		$sql = "select uris.url, uris.number_saved, spindlets.title, spindlets.description, spindlets.time_created
 				from test.uris
 				join test.spindlets on uris.uri_id = spindlets.uri_id
 				join test.users on spindlets.user_id = users.user_id

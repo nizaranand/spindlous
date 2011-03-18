@@ -40,15 +40,6 @@ class User extends CI_Model {
 		
 		return $this;		
 	}
-	
-	public function get_id() {
-	
-		
-	
-	}
-	
-	
-		
 }
 
 ?>

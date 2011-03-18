@@ -5,6 +5,96 @@ body {
 	color: #aaaaaa;
 }
 
+span.time {
+	font-size: 10px;
+	color: #090909;
+}
+
+#new_link_form {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	width: 680px;
+	font-size: 16px;
+
+}
+
+#new_link_form.heading {
+	text-align: center;
+	font-size: 22px;
+	font-weight: bold;
+	color: #aaaaaa;
+}
+
+#new_link_form form {
+
+	background-color: #4380D3;
+	padding: 10px;
+
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+
+}
+
+#new_link_form form label {
+	color: #11151E;
+}
+
+#new_link_form form input[type=text],input[type=password] {
+	width: 500px;
+	font-weight: bold;
+	padding: 8px;
+
+	border: 1px solid #FFF;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+#new_link_form form input[type=submit] {
+	display: block;
+	margin: auto;
+	width: 200px;
+	font-size: 18px;
+	background-color: #FFF;
+	border: 1px solid #BBB;
+
+}
+
+#new_link_form form input[type=submit]:hover {
+	border-color: #000;
+}
+
+#new_link_form .error {
+	font-size: 13px;
+	color: #690C07;
+	font-style: italic;
+}
+
+
+#new-link-button {
+	width: 200px;
+	height: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 75px;
+	background-color: #FFFF33;
+	border: 1px solid #000000;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#new-link-button a {
+	color: black;
+	width: 100%;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
 #top-bar {
 	width: 100%;
 	margin: 0px;
@@ -24,13 +114,13 @@ body {
 		);
 
 }
-#spindlet-input {
+#link-input {
 	margin-left: auto;
 	margin-right: auto;
 	width: 50%;
 }
 
-#spindlet-input form input[type=textarea] {
+#link-input form input[type=textarea] {
 	padding: 8px;
 	border: 1px solid #040404;
 	border-radius: 4px;
@@ -97,7 +187,7 @@ body {
 #spool {
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 100px;
+	margin-top: 50px;
 	margin-bottom: 100px;
 	width: 700px;
 	background-color: #FFFFFF;
@@ -109,7 +199,17 @@ body {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
+}
 
+#spool p{
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 12px;
+}
+
+#spool li{
+	margin-top:3px;
+	margin-bottom:3px;
 }
 
 

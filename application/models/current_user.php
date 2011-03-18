@@ -15,10 +15,7 @@ class Current_User {
 				return FALSE;
 			}
 			
-			$sql = "select user_id from users where user_id = ? limit 1";
-			$q = $CI->db->query($sql, $user_id);
-			
-			if (!$u = Current_User::get_user($user_id)) {
+			if (!$u = get_user_by_id($user_id)) {
                 return FALSE;
             }
 	
@@ -31,44 +28,20 @@ class Current_User {
 	public static function login($username, $password) {
 		
 		$CI =& get_instance();
-		$CI->load->helper('encryption_helper');
+		$CI->load->helper('encryption_helper');		
 		
-		$sql = "select user_id, password, salt from users where username = ? limit 1";
-		$q = $CI->db->query($sql, $username);
-		
-		if ($q->num_rows() == 1) {			
+		if ($u = get_user_by_username($username)) {			
 						
-			if($q->row()->password == encrypt_pw($password, $q->row()->salt)) {
-				
-				$u = new User();
-				$u->user_id = $q->row()->user_id;
-				$u->username = $username;
-				
+			if($u->password == encrypt_pw($password, $u->salt)) {
 				
 				$CI->session->set_userdata('user_id',$u->user_id);
 				self::$user = $u;
 				
-				return true;
+				return TRUE;
 			}
 		}
 		
-		return false;		
-	}
-	
-	public static function get_user($user_id) {
-	
-		$CI =& get_instance();
-	
-		$sql = "select username from users where user_id = ? limit 1";
-		$q = $CI->db->query($sql, $user_id);
-		if($q->num_rows() == 1) {
-			$u = New User;
-			$u->username = $q->row()->username;
-			$u->user_id = $user_id; 
-			
-			return $u;
-		}
-		return FALSE;	
+		return FALSE;		
 	}
 
 	public function __clone() {
