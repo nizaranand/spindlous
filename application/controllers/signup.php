@@ -31,8 +31,12 @@ class Signup extends CI_Controller {
 	
 	private function _submit_validate() {
 	
+		$this->form_validation->set_rules('email', 'E-mail',
+            'required|valid_email|unique[User.email]');
+		/*
 		$this->form_validation->set_rules('username', 'Username',
             'required|alpha_numeric|min_length[3]|max_length[12]|unique[User.username]');
+		*/
  
         $this->form_validation->set_rules('password', 'Password',
             'required|min_length[6]|max_length[12]');
@@ -40,8 +44,7 @@ class Signup extends CI_Controller {
         $this->form_validation->set_rules('passconf', 'Confirm Password',
             'required|matches[password]');
  
-        $this->form_validation->set_rules('email', 'E-mail',
-            'required|valid_email|unique[User.email]');
+        
  
         return $this->form_validation->run();
  

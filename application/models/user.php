@@ -20,7 +20,7 @@ class User extends CI_Model {
 		
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
-		$password = $this->input->post('password');		
+		$password = $this->input->post('password');
 		$salt = get_salt();
 		
 		$password = encrypt_pw($password, $salt);

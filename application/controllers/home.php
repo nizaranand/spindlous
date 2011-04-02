@@ -2,10 +2,11 @@
 class Home extends CI_Controller {
 
 	public function index() {
-		if($username = Current_User::user()->username) {		
+		if($u = Current_User::user()) {		
+		
 			$s = new Spindlet();
 			$data = array('main_content' => 'spool',
-							  'spool' => $s->spool_by_user($username));
+							  'spool' => $s->spool_by_user($u->username));
 			$this->load->view('includes/template', $data);
 		}
 		else {

@@ -47,6 +47,7 @@ $route['logout'] = 'logout';
 $route['saved_links'] = 'saved_links';
 $route['signup'] = 'signup';
 $route['spool'] = 'spool';
+$route['api'] = 'api';
 
 $route['profile/(:any)'] = 'profile/$1';
 $route['login/(:any)'] = 'login/$1';
@@ -54,6 +55,7 @@ $route['logout/(:any)'] = 'logout/$1';
 $route['saved_links/(:any)'] = 'saved_links/$1';
 $route['signup/(:any)'] = 'signup/$1';
 $route['spool/(:any)'] = 'spool/$1';
+$route['api/(:any)'] = 'api/$1';
 $route[''] = '';
 
 $route['(:any)'] = 'profile/display_by_username/$1';

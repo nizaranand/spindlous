@@ -9,11 +9,24 @@ class Profile extends CI_Controller {
     }
 	
 	public function index() {
+	
+		if($u = Current::user()) {
+			
+			//$data = array('main_content' => 'profile',
+			
+		}
 		
+	
+	}
+	
+
+
+
+	/*
 		if($u = Current_User::user()) {
 			$s = new Spindlet();
 			$data = array('main_content' => 'profile',
-						  'spool' => $s->spool_by_user(Current_User::user()->username));
+						  'spool' => $s->spool_by_user($u->username));
 			$this->load->view('includes/template', $data);
 		} else {
 			$this->load->view('welcome_page');
@@ -30,7 +43,7 @@ class Profile extends CI_Controller {
 		}
 	}
 	
-   
+   */
 }
 
 ?>

@@ -22,11 +22,11 @@ class Saved_links extends CI_Controller {
 	}
 	
 	function add() {
-		if($username = Current_User::user()->username) {		
+		if($u = Current_User::user()) {		
 			$s = new Spindlet();
 			$s->create();
 			$data = array('main_content' => 'links',
-						  'spool' => $s->spool_by_user($username));
+						  'spool' => $s->spool_by_user($u->username));
 			
 			$this->load->view('includes/template', $data);
 		} else {

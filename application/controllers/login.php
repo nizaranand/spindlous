@@ -3,6 +3,7 @@
 class Login extends CI_Controller {
 
     public function __construct() {	
+	
         parent::__construct();
 		
         $this->load->helper(array('form','url'));
@@ -10,7 +11,8 @@ class Login extends CI_Controller {
     }
 	
     public function index() {
-        $this->load->view('login_form');
+        $data['main_content'] = 'welcome_page';
+		$this->load->view('includes/template', $data);
     }
 	
 	public function submit() {
