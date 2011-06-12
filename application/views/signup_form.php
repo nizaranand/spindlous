@@ -12,10 +12,14 @@
 
 	<p class="heading">New User Signup</p>
 
-	<?php echo form_open('saved_links/add'); ?>
+	<?php echo form_open('signup/submit'); ?>
 
 	<?php echo validation_errors('<p class="error">','</p>'); ?>
-
+	
+	<p>
+		<label for="username">Username: </label>
+		<?php echo form_input('username', set_value('username')); ?>
+	</p>
 	<p>
 		<label for="email">E-mail: </label>
 		<?php echo form_input('email',set_value('email')); ?>

@@ -5,27 +5,15 @@ class Home extends CI_Controller {
 		if($u = Current_User::user()) {		
 		
 			$s = new Spindlet();
+			$spool_data = array('username' => $u->username, 'spool_by' => 'username');
 			$data = array('main_content' => 'spool',
-							  'spool' => $s->spool_by_user($u->username));
+							  'spool' => $s->spool($spool_data));
 			$this->load->view('includes/template', $data);
 		}
 		else {
 			
 			$this->load->view('welcome_page');
 			
-		}
-	}
-	
-	public function add_spindlet() {
-		if($username = Current_User::user()->username) {		
-			$s = new Spindlet();
-			$s->create();
-			$data = array('main_content' => 'spool',
-						  'spool' => $s->spool_by_user($username));
-			
-			/*$this->load->view('includes/template', $data);*/
-		} else {
-			$this->load->view('welcome_page');
 		}
 	}
 	
