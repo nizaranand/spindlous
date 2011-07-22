@@ -54,7 +54,7 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'session');
+$autoload['libraries'] = array('database', 'session', 'Mongo_db');
 
 
 /*
@@ -66,7 +66,7 @@ $autoload['libraries'] = array('database', 'session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form', 'user_helper');
+$autoload['helper'] = array('url','form');
 
 
 /*
@@ -112,7 +112,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('user', 'spindlet', 'spindle_url');
+$autoload['model'] = array('User', 'Spindlet', 'Spindle_Url');
 require_once('application/models/current_user.php');
 
 

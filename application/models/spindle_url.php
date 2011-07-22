@@ -2,47 +2,33 @@
 
 Class Spindle_url extends CI_Model {
 
-	function __construct()
-	{ 
+	function __construct() { 
 		parent::__construct();
+		
 	}
 	
-	function create($url) {
-
-		if ($this->exists($url)) {			
-			
-			$n = $this->get_num_saved($url) + 1;		
-			
-			$this->db->query('update urls set number_saved = ? where url = ?', array($n, $url));
-			
+	function add($data) {
+		
+		$u = $this->mongo_db->get_where('urls', array('url' => $data['url']));
+		if (sizeof($u) > 0) {
+			$this->mongo_db->update('urls', array('saved' => $u[0]['saved'] + 1));
 		} else {
-					  
-			$this->db->insert('urls', array('url' => $url, 'number_saved' => 1));
-			
+			$data['first_saved'] = date('m-d-Y H:i:s');
+			$data['saved'] = 1;
+			$this->mongo_db->insert('urls', $data);
 		}
-	}
-	
-	function exists($url) {
-	
-		$sql = "select url from urls where url = ? limit 1";		
-		$q = $this->db->query($sql, $url);
-		
-		if($q->num_rows() == 1) {		
-			return true;
-		}						  
-		return FALSE;
-	
-	}
-	
-	function get_num_saved($url) {
-		
-		$sql = "select number_saved from urls where url = ? limit 1";
-		$q = $this->db->query($sql, $url);
-		
-		if($q->num_rows() == 1) {		
-			return $q->row('number_saved');
-		}						  
-		return FALSE;
 		
 	}
+	
+	function get($data) {
+		
+		$u = $this->mongo_db->get_where('urls', $data);
+		if(sizeof($u) > 0) {
+			return $u[0];
+		} else {
+			return FALSE;
+		}
+		
+	}
+
 }

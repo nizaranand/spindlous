@@ -8,10 +8,11 @@ class Saved_links extends CI_Controller {
 	}
 	
 	function index() {
-		if($username = Current_User::user()->username) {		
-			$s = new Spindlet();
+		if($u = Current_User::user()) {
+					
+			$s = $this->Spindlet->get(array('author' => $u->info['username']));
 			$data = array('main_content' => 'links',
-							  'spool' => $s->spool_by_user($username));
+						  'spool' => $s);
 			$this->load->view('includes/template', $data);
 		}
 	}
@@ -23,14 +24,20 @@ class Saved_links extends CI_Controller {
 	
 	function add() {
 		if($u = Current_User::user()) {		
-			$s = new Spindlet();
-			$s->create();
-			$data = array('main_content' => 'links',
-						  'spool' => $s->spool_by_user($u->username));
 			
-			$this->load->view('includes/template', $data);
+			$data['author'] = $u->info['username'];
+			$data['url'] = $this->input->post('url');
+			$data['title'] = $this->input->post('title');
+			$data['body'] = $this->input->post('body');
+			$data['tags'] = array();
+			
+			$this->Spindlet->create($data);
+			redirect('/saved_links/');
+			
 		} else {
-			$this->load->view('welcome_page');
+			
+			redirect('/');
+			
 		}
 	}
 

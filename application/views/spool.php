@@ -24,32 +24,13 @@
 		<?php echo form_close(); ?>
 	</div>
 	<div id = "link-container">
-		<?php if ($spool->num_rows > 0) { ?>
-			<?php foreach ($spool->result() as $row ) { ?>
+		<?php if (sizeof($spool) > 0) { ?>
+			<?php foreach($spool as $row)  { ?>
 			<p><?php echo $row->url; ?>
 			<?php echo $row->title; ?>
-			<?php echo $row->description; ?></p>
+			<?php echo $row->body; ?></p>
 		<?php } } ?>
 		
 		
 	</div>
 </div>
-<script type="text/javascript">
-$('#submit').click(function() {
-
-	var form_data = {
-		url: $('#url').val()
-	};
-	
-	$.ajax({
-		url: "<?php echo site_url('home/add_link'); ?>,
-		type: 'POST',
-		data: form_data,
-		success: function(msg) {
-			alert(msg);
-		}
-	});
-	
-	return false;
-});
-</script>

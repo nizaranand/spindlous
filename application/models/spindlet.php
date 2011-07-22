@@ -1,54 +1,58 @@
 <?php
 
 Class Spindlet extends CI_Model {
-
-	function __construct()
-	{ 
+	
+	public $spool;
+	
+	function __construct() { 
 		parent::__construct();
 	}
 	
-	public function create() {
-	
-		$u = Current_User::user();
-		$l = new Spindle_url();
-	
-		$url = $this->input->post('url');
-		$l->create($url);
-	
-		$this->db->insert('spindlets', array('url' => $url,
-											 'user_id' => $u->user_id,
-											 'title' => $this->input->post('title'),
-											 'description' => $this->input->post('description'),
-											 'time_created' => date('Y-m-d H:i:s')));
-	
+	public function create($data) {
+		
+		$this->load->helper('id_gen_helper');
+		$url_data['url'] = $data['url'];
+		$url_data['username'] = $data['author'];
+		$this->Spindle_Url->add($url_data);
+		$data['shortid'] = get_unique_id();
+		$data['created'] = date('m-d-Y H:i:s');
+		$this->mongo_db->insert('spindlets', $data);
+		
 	}
 	
-	public function spool($data)	{
+	public function get($data) {
+		
+		return $this->mongo_db->get_where('spindlets', $data);
+		
+	}
 	
-		if ($data["spool_by"] == "username") {
-			
-			$sql = "select urls.url, urls.number_saved, spindlets.title, spindlets.description, spindlets.time_created
-				from test.urls
-				join test.spindlets on urls.url = spindlets.url
-				join test.users on spindlets.user_id = users.user_id
-				where users.username = ?";
-				
-			return $this->db->query($sql, $data["username"]);
-		}
+	public function publish($id) {
 		
-		if($data["spool_by"] == "tag") {
-			
-			$sql = "select uris.url, uris.number_saved, spindlets.title, spindlets.description, spindlets.time_created
-				from test.uris
-				join test.spindlets on uris.uri_id = spindlets.uri_id
-				join test.tag_spindlet_map on spindlets.spindlet_id = tag_spindlet_map.spindlet_id
-				join test.tags on tag_spindlet_map.tag_id = tags.tag_id
-				where tags.tag = ?";
-				
-			return $this->db->query($sql, $data["tag"]);
-		}
+		$this->mongo_db->where(array('_id' => $id))->update('spindlets', array('published' => 'true'));
 		
+	}
+	
+	public function hide($id) {
 		
-	}	
+		$this->mongo_db->where(array('_id' => $id))->update('spindlets', array('published' => 'false'));
+		
+	}
+	
+	public function add_tag($id, $tag) {
+		
+		$this->mongo_db->where(array('shortid' => $id))->push('spindlets', array('tags' => $tag));
+		
+	}
+	
+	public function remove_tag($id, $tag) {
+		
+		$this->mongo_db->where(array('shortid' => $id))->pull('spindlets', array('tags' => $tag));
+		
+	}
+	public function update($id, $data) {
+		
+		$this->mongo_db->where(array('_id' => $_id))->update('spindlets', $data);
+		
+	}
 }
 	

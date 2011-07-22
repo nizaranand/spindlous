@@ -20,9 +20,11 @@ class Signup extends CI_Controller {
 			$this->index();
 			return false;
 		} else { 
-			$this->load->view('submit_success');		
-			$u = new User();						
-			$u->signup();
+					
+			$data = array('username' => $this->input->post('username'),
+			              'email' => $this->input->post('email'),
+			              'password' => $this->input->post('password'));						
+			$this->User->signup($data);
 
 			$this->load->view('submit_success');
 		}
@@ -32,10 +34,10 @@ class Signup extends CI_Controller {
 	private function _submit_validate() {
 	
 		$this->form_validation->set_rules('email', 'E-mail',
-            'required|valid_email|unique[User.email]');
+            'required|valid_email|unique[users.email]');
 		
 		$this->form_validation->set_rules('username', 'Username',
-            'required|alpha_numeric|min_length[3]|max_length[32]|unique[User.username]');
+            'required|alpha_numeric|min_length[3]|max_length[32]|unique[users.username]');
 		
  
         $this->form_validation->set_rules('password', 'Password',

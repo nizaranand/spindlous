@@ -11,11 +11,13 @@ class Current_User {
 
 			$CI =& get_instance();
 			
-			if (!$user_id = $CI->session->userdata('user_id')) {
+			if (!$username = $CI->session->userdata('username')) {
 				return FALSE;
 			}
 			
-			if (!$u = get_user_by_id($user_id)) {
+			$u = new User();
+			
+			if (!$u->get($username)) {
                 return FALSE;
             }
 	
@@ -29,12 +31,12 @@ class Current_User {
 		
 		$CI =& get_instance();
 		$CI->load->helper('encryption_helper');		
-		
-		if ($u = get_user_by_username($username)) {			
+		$u = new User();
+		if ($u->get($username)) {			
 						
-			if($u->password == encrypt_pw($password, $u->salt)) {
+			if($u->info['password'] == encrypt_pw($password, $u->info['salt'])) {
 				
-				$CI->session->set_userdata('user_id',$u->user_id);
+				$CI->session->set_userdata('username',$u->info['username']);
 				self::$user = $u;
 				
 				return TRUE;

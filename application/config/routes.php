@@ -40,7 +40,7 @@
 
 $route['default_controller'] = "home";
 $route['404_override'] = '';
-
+/*
 $route['profile'] = 'profile';
 $route['login'] = 'login';
 $route['logout'] = 'logout';
@@ -57,8 +57,8 @@ $route['signup/(:any)'] = 'signup/$1';
 $route['spool/(:any)'] = 'spool/$1';
 $route['api/(:any)'] = 'api/$1';
 $route[''] = '';
-
-$route['(:any)'] = 'profile/display_by_username/$1';
+*/
+//$route['(:any)'] = 'profile/display_by_username/$1';
 
 
 /* End of file routes.php */

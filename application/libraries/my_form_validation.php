@@ -9,11 +9,11 @@ class MY_Form_validation extends CI_Form_validation {
 		$CI->form_validation->set_message('unique',
 			'The %s is already being used.');
 
-		list($model, $field) = explode(".", $params, 2);
+		list($collection, $field) = explode(".", $params, 2);
 
-		$q = $CI->db->query('select '.$field.' from '.$model.'s where '.$field.' = "'.$value.'"');
+		$q = $CI->mongo_db->where(array($field => $value))->count($collection);
 
-		if ($q->num_rows() == 1) {
+		if ($q  == 1) {
 			return false;
 		} else {
 			return true;

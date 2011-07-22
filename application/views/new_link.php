@@ -22,7 +22,7 @@
 	
 		
 		<label for="description">Description:</label>
-		<?php echo form_textarea('description',set_value('description')); ?>
+		<?php echo form_textarea('body',set_value('body')); ?>
 	</p>
 	<p>
 		<?php echo form_submit('submit','Submit'); ?>
@@ -30,23 +30,3 @@
 	<?php echo form_close(); ?>
 
 </div>
-
-<script type="text/javascript">
-$('#submit').click(function() {
-
-	var form_data = {
-		url: $('#url').val()
-	};
-	
-	$.ajax({
-		url: "<?php echo site_url('home/add_link'); ?>",
-		type: 'POST',
-		data: form_data,
-		success: function(msg) {
-			alert(msg);
-		}
-	});
-	
-	return false;
-});
-</script>
