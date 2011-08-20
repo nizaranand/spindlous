@@ -9,9 +9,9 @@ class Spool extends CI_Controller {
 	
 	function index() {
 	
-		if ($username = Current_user::user()->info['username']) {
-		
-			$s = $this->Spindlet->get(array('author' => $username));
+		if ($u = Current_user::user()) {
+			
+			$s = $this->Spindlet->get(array('author' => $u->username));
 			$data = array('main_content' => 'spool',
 						  'spool' => $s);
 			$this->load->view('includes/template', $data);

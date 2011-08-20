@@ -12,7 +12,7 @@ class Profile extends CI_Controller {
 	
 		if($u = Current_User::user()) {		
 		
-			$s = $this->Spindlet->get(array('author' => $u->info['username']));
+			$s = $this->Spindlet->get(array('author' => $u->username, 'published' => 'true'));
 			$data = array('main_content' => 'profile',
 						         'spool' => $s);
 			$this->load->view('includes/template', $data);

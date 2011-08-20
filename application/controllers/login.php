@@ -18,6 +18,7 @@ class Login extends CI_Controller {
 	public function submit() {
 	
 		if ($this->_submit_validate() === FALSE ) {
+
 			$this->index();
 			return;
 		}

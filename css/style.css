@@ -79,13 +79,35 @@ span.time {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 75px;
-	background-color: #FFFF33;
+	background-color: #FFFFFF;
 	border: 1px solid #000000;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
 #new-link-button a {
+	color: black;
+	width: 100%;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+#new-post-button {
+	width: 200px;
+	height: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 75px;
+	background-color: #FFFFFF;
+	border: 1px solid #000000;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#new-post-button a {
 	color: black;
 	width: 100%;
 	height: 100%;
@@ -291,4 +313,24 @@ input, textarea, select {
 	font-style: italic;
 }
 
+#profile_container {
+	width: 70%;
+	background-color: #FFFFFF;
+	border: 1px solid #000000;
+	display: block;
+	margin-top: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px;
+	height: 700px;	
+}
 
+#post-form-container {
+	display: none;
+	position: absolute;
+	background-color: #FFFFFF;
+	border: 1px solid #000000;
+	width: 700px;
+	height: 600px;
+	padding: 20px;
+}

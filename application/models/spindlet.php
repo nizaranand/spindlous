@@ -11,13 +11,17 @@ Class Spindlet extends CI_Model {
 	public function create($data) {
 		
 		$this->load->helper('id_gen_helper');
-		$url_data['url'] = $data['url'];
+		$data['shortid'] = get_unique_id();
+		if ( $data['url'] == '' ) {
+			$url_data['url'] = base_url() . $data['shortid'];
+			$data['url'] = $url_data['url'];
+		} else {
+			$url_data['url'] = $data['url'];
+		}
 		$url_data['username'] = $data['author'];
 		$this->Spindle_Url->add($url_data);
-		$data['shortid'] = get_unique_id();
 		$data['created'] = date('m-d-Y H:i:s');
 		$this->mongo_db->insert('spindlets', $data);
-		
 	}
 	
 	public function get($data) {
