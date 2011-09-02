@@ -16,4 +16,26 @@ class Ajax extends CI_Controller {
 			$this->Spindlet->create($data);
 		}
 	}
+	
+	public function username_check() {
+		
+		$username = $this->input->post('username');
+		if ( ($this->User->username_exists($username)) || ($this->Spindlet->id_exists($username)) ) {
+			echo "exists";
+		} else {
+			echo "does_not_exist";
+		}
+			
+	}
+	
+	public function email_check() {
+		
+		$email = $this->input->post('email');
+		if ($this->User->email_exists($email)) {
+			echo "exists";
+		} else {
+			echo "does_not_exist";
+		}
+		
+	}
 }

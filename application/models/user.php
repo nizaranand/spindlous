@@ -39,6 +39,18 @@ class User extends CI_Model {
 		
 	}
 	
+	public function username_exists($username) {
+	
+		return ( $this->mongo_db->where(array('username' => $username))->count('users') > 0 );
+	
+	}
+	
+	public function email_exists($email) {
+	
+		return ( $this->mongo_db->where(array('email' => $email))->count('users') > 0 );
+	
+	}
+	
 }
 
 ?>

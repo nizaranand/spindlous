@@ -18,19 +18,19 @@
 	
 	<p>
 		<label for="username">Username: </label>
-		<?php echo form_input('username', set_value('username')); ?>
+		<input type="text" id="username" />
 	</p>
 	<p>
 		<label for="email">E-mail: </label>
-		<?php echo form_input('email',set_value('email')); ?>
+		<input type="text" id="email" />
 	</p>	
 	<p>
 		<label for="password">Password: </label>
-		<?php echo form_password('password'); ?>
+		<input type="text" id="password" />
 	</p>
 	<p>
 		<label for="passconf">Confirm Password: </label>
-		<?php echo form_password('passconf'); ?>
+		<input type="text" id="passconf" />
 	</p>	
 	<p>
 		<?php echo form_submit('submit','Create my account'); ?>
@@ -41,6 +41,3 @@
 	</p>
 
 </div>
-
-</body>
-</html>

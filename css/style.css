@@ -28,7 +28,7 @@ span.time {
 
 #new_link_form form {
 
-	background-color: #4380D3;
+	background-color: #454545;
 	padding: 10px;
 
 	border-radius: 8px;
@@ -134,6 +134,9 @@ span.time {
 		color-stop(0.24, rgb(36,36,36)),
 		color-stop(0.62, rgb(66,66,66))
 		);
+	   -moz-box-shadow: 0 0 4px 4px #888;
+	-webkit-box-shadow: 0 0 4px 4px #888;
+	        box-shadow: 0 0 4px 4px #888;
 
 }
 #link-input {
@@ -264,12 +267,12 @@ input, textarea, select {
 	text-align: center;
 	font-size: 22px;
 	font-weight: bold;
-	color: #aaaaaa;
+	color: #454545;
 }
 
 #signup_form form {
 
-	background-color: #4380D3;
+	background-color: #454545;
 	padding: 10px;
 
 	border-radius: 8px;
@@ -279,7 +282,7 @@ input, textarea, select {
 }
 
 #signup_form form label {
-	color: #11151E;
+	color: #9A9A9A;
 }
 
 #signup_form form input[type=text],input[type=password] {

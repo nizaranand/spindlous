@@ -30,6 +30,12 @@ Class Spindlet extends CI_Model {
 		
 	}
 	
+	public function id_exists($id) {
+		
+		return ( $this->mongo_db->where(array('shortid' => $id))->count('spindlets') > 0 );		
+		
+	}
+	
 	public function publish($id) {
 		
 		$this->mongo_db->where(array('_id' => $id))->update('spindlets', array('published' => 'true'));
