@@ -110,30 +110,30 @@ function hideError(element) {
 
 }
 
-var invalid_usernames = { "admin", "administrator", "ajax", "api", "home", "login", "logout", "profile", "saved_links", "signup", "spool", "test", "iphone", "android"};
+var invalid_usernames = new Array( "admin", "administrator", "ajax", "api", "home", "login", "logout", "profile", "saved_links", "signup", "spool", "test", "iphone", "android" );
 
-var invalid_passwords = {"password", "test", "testing" "stupid", "spindlous", "123456", "secret"}
+var invalid_passwords = new Array( "password", "test", "testing", "stupid", "spindlous", "123456", "secret" );
 
-$(document).ready(function(){
+$(document).ready(function() {
 
-	$('.new').click(function(e){
+	$('.new').click(function(e) {
 		positionPopup($('#post-form-container'));
 		$('#post-form-container').show();
 		e.preventDefault();
 	});
 	
-	$('#close').click(function(e){
+	$('#close').click(function(e) {
 		$('#post-form-container').hide();
 		e.preventDefault();
 	});
 	
-	$('#post-submit').click(function(){
-		var published
+	$('#post-submit').click(function() {
+		var published;
 		
 		if ($("#publish").attr('checked')) {
-			published = "true"
+			published = "true";
 		} else {
-			published = "false"
+			published = "false";
 		}
 		
 		var postData = {
@@ -152,7 +152,7 @@ $(document).ready(function(){
 			type: "POST",
 			url: "http://localhost/spindlous/ajax/add_post",
 			data: postData,
-			success: function(data){
+			success: function(data) {
 				$('#post-form-container').hide();
 				refresh_page();
 			}
@@ -168,6 +168,21 @@ $(document).ready(function(){
 	$('#email').change(function() {
 	
 		
+		
+	});
+	
+	$('#url').change(function() {
+		
+		var postData = { "url": $('#url').val() };
+		
+		$.ajax({
+			type: "POST",
+			url: "http://localhost/spindlous/ajax/website_scrape",
+			data: postData,
+			success: function(data) {
+				alert(data);
+			}
+		});
 		
 	});
 	
