@@ -19,6 +19,10 @@ class Login extends CI_Controller {
 	
 		if ($this->_submit_validate() === FALSE ) {
 
+			$u = Current_User::user();
+			
+			log_message('debug', $u['password']);
+			
 			$this->index();
 			return;
 		}

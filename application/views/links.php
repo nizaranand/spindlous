@@ -27,6 +27,11 @@
 		<label for="title">URL: </label>
 		<input id="url" class="url" type="text" size="20" />
 	<p>
+	<p class="image-preview">
+		<img id="link-image" src="images/placeholder.jpg" />
+		<br />
+		<a href="/" id="prev-image">Prev</a> - <a href="/" id="next-image">Next</a>
+	</p>
 		<label for="title">Title: </label>
 		<input id="title" class="title" type="text" size="20" />
 	</p>

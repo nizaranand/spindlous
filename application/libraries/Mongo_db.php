@@ -4,16 +4,15 @@
  * CodeIgniter MongoDB Active Record Library
  *
  * A library to interface with the NoSQL database MongoDB. For more information see http://www.mongodb.org
- * Originally created by Alex Bilbie, but extended and updated by Kyle J. Dye
  *
  * @package		CodeIgniter
  * @author		Alex Bilbie | www.alexbilbie.com | alex@alexbilbie.com
  * @copyright	Copyright (c) 2010, Alex Bilbie.
  * @license		http://www.opensource.org/licenses/mit-license.php
  * @link		http://alexbilbie.com
- * @version		Version 0.4.3
+ * @version		Version 0.4.8
  *
- * Thanks to Kyle Dye (kyledye.com), Nick Jackson (nickjackson.me) and Phil Sturgeon (philsturgeon.co.uk) for additional help
+ * Thanks to Kyle Dye (kyledye.com), Nick Jackson (nickjackson.me), Mikhail Kozlov (mikhailkozlov.com) and Phil Sturgeon (philsturgeon.co.uk) for additional help
  */
 
 class Mongo_db {
@@ -236,7 +235,7 @@ class Mongo_db {
 	*
 	*	Get the documents where the value of a $field may be something else
 	*
-	*	@usage : $this->mongo_db->or_where(array( array('foo'=>'bar', 'bar'=>'foo' ))->get('foobar');
+	*	@usage : $this->mongo_db->or_where(array('foo'=>'bar', 'bar'=>'foo'))->get('foobar');
 	*/
 	
 	public function or_where($wheres = array())
@@ -478,7 +477,7 @@ class Mongo_db {
 	public function like($field = "", $value = "", $flags = "i", $enable_start_wildcard = TRUE, $enable_end_wildcard = TRUE)
 	 {
 	 	$field = (string) trim($field);
-	 	$this->where_init($field);
+	 	$this->_where_init($field);
 	 	$value = (string) trim($value);
 	 	$value = quotemeta($value);
 	 	
@@ -597,7 +596,17 @@ class Mongo_db {
 	 	
 	 	if (isset($this->wheres['_id']) and ! ($this->wheres['_id'] instanceof MongoId))
 		{
-			$this->wheres['_id'] = new MongoId($this->wheres['_id']);
+			if( is_array( $this->wheres['_id']) ){ // looks like case of IN or NIN
+				foreach($this->wheres['_id'][key($this->wheres['_id'])] as $i=>$id)
+				{
+					if( !($id instanceof MongoId) )
+					{
+						$this->wheres['_id'][key($this->wheres['_id'])][$i] = new MongoId($id);
+					}
+				}
+			}else{
+				$this->wheres['_id'] = new MongoId($this->wheres['_id']);
+			}
 		}
 	 		 	
 	 	$documents = $this->db->{$collection}->find($this->wheres, $this->selects)->limit((int) $this->limit)->skip((int) $this->offset)->sort($this->sorts);
@@ -609,7 +618,14 @@ class Mongo_db {
 	 	
 	 	while ($documents->hasNext())
 		{
-			$returns[] = (object) $documents->getNext();
+			if ($this->CI->config->item('mongo_return') == 'object')
+			{
+				$returns[] = (object) $documents->getNext();	
+			}
+			else 
+			{
+				$returns[] = (array) $documents->getNext();
+			}
 		}
 	 	
 	 	if ($this->CI->config->item('mongo_return') == 'object')
@@ -684,6 +700,45 @@ class Mongo_db {
 			show_error("Insert of data into MongoDB failed: {$e->getMessage()}", 500);
 		}
 	}
+    
+    /**
+    * --------------------------------------------------------------------------------
+    * Batch Insert
+    * --------------------------------------------------------------------------------
+    *
+    * Insert a multiple new document into the passed collection
+    *
+    * @usage : $this->mongo_db->batch_insert('foo', $data = array());
+    */
+    public function batch_insert($collection = "", $insert = array())
+    {
+            if (empty($collection))
+            {
+                    show_error("No Mongo collection selected to insert into", 500);
+            }
+
+            if (count($insert) == 0 || !is_array($insert))
+            {
+                    show_error("Nothing to insert into Mongo collection or insert is not an array", 500);
+            }
+
+            try
+            {
+                    $this->db->{$collection}->batchInsert($insert, array($this->query_safety => TRUE));
+                    if (isset($insert['_id']))
+                    {
+                            return ($insert['_id']);
+                    }
+                    else
+                    {
+                            return (FALSE);
+                    }
+            }
+            catch (MongoCursorException $e)
+            {
+                    show_error("Insert of data into MongoDB failed: {$e->getMessage()}", 500);
+            }
+    }
 	
 	
 	/**
@@ -742,7 +797,7 @@ class Mongo_db {
 	*	@usage: $this->mongo_db->update_all('foo', $data = array());
 	*/
 	
-	public function update_all($collection = "", $data = array())
+	public function update_all($collection = "", $data = array(), $options = array())
 	{
 		if (empty($collection))
 		{
@@ -998,11 +1053,11 @@ class Mongo_db {
 			$this->updates['$pop'][$field] = -1;
 		}
 		
-		elseif (is_array($fields))
+		elseif (is_array($field))
 		{
-			foreach ($fields as $field)
+			foreach ($field as $pop_field)
 			{
-				$this->updates['$pop'][$field] = -1;
+				$this->updates['$pop'][$pop_field] = -1;
 			}
 		}
 		
@@ -1274,6 +1329,86 @@ class Mongo_db {
 		
 		return ($this->db->{$collection}->getIndexInfo());
 	}
+    
+    /**
+     *	--------------------------------------------------------------------------------
+	 *	Mongo Date
+	 *	--------------------------------------------------------------------------------
+	 *
+	 *	Create new MongoDate object from current time or pass timestamp to create
+     *  mongodate.
+	 *
+	 *	@usage : $this->mongo_db->date($timestamp);
+     */
+    public function date($stamp = FALSE)
+    {
+            if ( $stamp == FALSE )
+            {   
+                    return new MongoDate();
+            }
+            
+            return new MongoDate($stamp);            
+    }
+    
+    /**
+     *	--------------------------------------------------------------------------------
+	 *	Get Database Reference
+	 *	--------------------------------------------------------------------------------
+	 *
+	 *	Get mongo object from database reference using MongoDBRef
+	 *
+	 *	@usage : $this->mongo_db->get_dbref($object);
+     */    
+    public function get_dbref($obj)
+    {
+        if (empty($obj) OR !isset($obj))
+        {
+                show_error('To use MongoDBRef::get() ala get_dbref() you must pass a valid reference object', 500);
+        }
+
+        if ($this->CI->config->item('mongo_return') == 'object')
+        {
+                return (object) MongoDBRef::get($this->db, $obj);
+        }
+        else
+        {
+                return (array) MongoDBRef::get($this->db, $obj);
+        }                
+    }
+
+    /**
+     *	--------------------------------------------------------------------------------
+	 *	Create Database Reference
+	 *	--------------------------------------------------------------------------------
+	 *
+	 *	Create mongo dbref object to store later
+	 *
+	 *	@usage : $ref = $this->mongo_db->create_dbref($collection, $id);
+     */    
+    public function create_dbref($collection = "", $id = "", $database = FALSE )
+    {
+        if (empty($collection))
+        {
+            show_error("In order to retreive documents from MongoDB, a collection name must be passed", 500);
+        }
+
+        if (empty($id) OR !isset($id))
+        {
+                show_error('To use MongoDBRef::create() ala create_dbref() you must pass a valid id field of the object which to link', 500);
+        }
+
+        $db = $database ? $database : $this->db;
+
+        if ($this->CI->config->item('mongo_return') == 'object')
+        {
+                return (object) MongoDBRef::create($collection, $id, $db);
+        }
+
+        else
+        {
+                return (array) MongoDBRef::get($this->db, $obj);
+        }                
+    }
 	
 
 	/**

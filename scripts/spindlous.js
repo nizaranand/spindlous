@@ -1,12 +1,11 @@
 function positionPopup(e) {
 	
-	var yoffset = ( $(window).height() / 2 ) - ( e.height() / 2);
+	
 	var xoffset = ( $(window).width() / 2 ) - ( e.width() / 2);
 	
-	yoffset = yoffset + 'px';
 	xoffset = xoffset + 'px';
 	
-	e.css({'top' : yoffset, 'right': xoffset});
+	e.css({'right': xoffset});
 	
 }
 
@@ -116,6 +115,18 @@ var invalid_passwords = new Array( "password", "test", "testing", "stupid", "spi
 
 $(document).ready(function() {
 
+	$('.settings-menu-item').mouseover(function() {
+	
+		$(this).css({"background-color": "#DDDDDD", "color": "#333333"});
+	
+	});
+	
+	$('.settings-menu-item').mouseleave(function() {
+	
+		$(this).css({"background-color": "#AAAAAA", "color": "white"});
+	
+	});
+
 	$('.new').click(function(e) {
 		positionPopup($('#post-form-container'));
 		$('#post-form-container').show();
@@ -171,16 +182,52 @@ $(document).ready(function() {
 		
 	});
 	
+	$('.image-preview').hide();
+	
+	
 	$('#url').change(function() {
 		
 		var postData = { "url": $('#url').val() };
+		
+		var i = 0;
 		
 		$.ajax({
 			type: "POST",
 			url: "http://localhost/spindlous/ajax/website_scrape",
 			data: postData,
-			success: function(data) {
-				alert(data);
+			success: function(json) {
+				var images = JSON.parse(json);
+				
+				images = 
+				
+				$('.image-preview').show();
+				$('#link-image').attr('src', images[i].src);
+				$('#next-image').bind('click', function(event) {
+					event.preventDefault();
+					i++;
+					
+					if ( i > images.length) { 
+						i = 0; 
+					}
+					
+					$('#link-image').attr('src', images[i].src);
+					
+				});
+				
+				$('#prev-image').bind('click', function(event) {
+					event.preventDefault();
+					i--;
+					
+					if ( i < 0) { 
+						i = images.length;
+					}
+					
+					$('#link-image').attr('src', images[i].src);
+					
+				});
+				
+				
+				
 			}
 		});
 		

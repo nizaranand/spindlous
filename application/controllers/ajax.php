@@ -43,6 +43,12 @@ class Ajax extends CI_Controller {
 		
 		$url = $this->input->post('url');
 		
+		if  ( preg_match( '/^http:\/\//', $url) == 0) {
+		
+			$url = "http://" . $url;
+		
+		}
+		
 		$ch = curl_init();
 		$timeout = 5;
   		curl_setopt($ch,CURLOPT_URL,$url);
@@ -52,14 +58,39 @@ class Ajax extends CI_Controller {
 		curl_close($ch);
 		
 		if(@$doc = DOMDocument::loadHTML($data)) {
+	
 			
 			$images = $doc->getElementsByTagName("img");
 			
-			foreach ( $images as $image ) {
+			$json = array();
+			
+			for ( $i = 0; $i < $images->length; $i++ ) {
+			
+				$image_src = $images->item($i)->attributes->getNamedItem("src")->nodeValue;
 				
-			echo $url . $image->attributes->getNamedItem("src")->nodeValue . "\n";
-
+				
+				if ( ( preg_match( '/^http:/', $image_src) == 1) ){ 
+				
+					$size = getimagesize($image_src);					
+					
+				} else if ( preg_match( '/^www\./', $image_src) == 1) {
+					
+					$image_src = "http://" . $image_src;
+					$size = getimagesize($image_src);					
+					
+				} else {
+					
+					$image_src = $url . $image_src;
+					$size = getimagesize($image_src);					
+				
+				}
+				
+				$json[$i] = array("src" => $image_src, "width" => $size[0], "height" => $size[1]);
+				
 			}
+			
+			$json = json_encode($json);
+			echo $json;
 			
 		} else {
 			

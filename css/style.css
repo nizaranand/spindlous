@@ -80,19 +80,19 @@ span.time {
 	margin-right: auto;
 	margin-top: 75px;
 	background-color: #FFFFFF;
-	border: 1px solid #000000;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	border: none;
+	padding-top: 10px;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
 }
 #new-link-button a {
 	color: black;
 	width: 100%;
 	height: 100%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: auto;
-	margin-bottom: auto;
+	text-decoration: none;
+	padding: 10px 48px 10px 51px;
+
 }
 
 #new-post-button {
@@ -102,19 +102,18 @@ span.time {
 	margin-right: auto;
 	margin-top: 75px;
 	background-color: #FFFFFF;
-	border: 1px solid #000000;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	border: none;
+	padding-top: 10px;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
 }
 #new-post-button a {
 	color: black;
 	width: 100%;
 	height: 100%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: auto;
-	margin-bottom: auto;
+	text-decoration: none;
+	padding: 10px 70px 10px 65px;
 }
 
 #top-bar {
@@ -196,7 +195,7 @@ span.time {
 
 #container3 {
 	float: right;
-	width: 75%;
+	width: 67%;
 }
 
 #user_control_box{
@@ -214,16 +213,17 @@ span.time {
 	margin-right: auto;
 	margin-top: 50px;
 	margin-bottom: 100px;
+	padding: 10px 10px 10px 10px;
 	width: 700px;
 	background-color: #FFFFFF;
 	color: #000000;
 	font-size: 14px;
 	position: relative;
 	
-	border: 1px solid #000000;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	border: none;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
 }
 
 #spool p{
@@ -237,6 +237,55 @@ span.time {
 	margin-bottom:3px;
 }
 
+#settings-container {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 75px;
+	margin-bottom: 100px;
+	padding: 0;
+	width: 850px;
+	background-color: #FFFFFF;
+	color: #000000;
+	font-size: 14px;
+	position: relative;	
+	border: none;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+#settings-inner {
+	padding: 10px
+}
+
+#settings-inner form input[type=text], #settings-inner form input[type=password] {
+	width: 200px;
+	font-weight: bold;
+	padding: 8px;
+
+	border: 1px solid #AAA;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+#tab-container {
+	margin-left: auto;
+	margin-right: auto;
+	width: 830px;
+	color: #FFFFFF;
+	padding: 50px 10px 5px 10px;
+	background-color: #AAAAAA;
+	position: relative;	
+	border-bottom: 1px solid #666;
+	-webkit-border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
+	-moz-border-radius-topleft: 6px;
+	-moz-border-radius-topright: 6px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	
+}
+
 
 
 a {
@@ -246,7 +295,7 @@ a {
 
 a:hover {
 	color: #aaaaaa;
-}
+}https://twitter.com/#!/amandapalmer/status/114540252164661251
 
 input, textarea, select {
 	font-family:inherit;
@@ -285,7 +334,7 @@ input, textarea, select {
 	color: #9A9A9A;
 }
 
-#signup_form form input[type=text],input[type=password] {
+#signup_form form input[type=text], #signup_form form input[type=password] {
 	width: 316px;
 	font-weight: bold;
 	padding: 8px;
@@ -319,21 +368,81 @@ input, textarea, select {
 #profile_container {
 	width: 70%;
 	background-color: #FFFFFF;
-	border: 1px solid #000000;
+	border: none;
 	display: block;
 	margin-top: 25px;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 5px;
-	height: 700px;	
+	height: 700px;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
 }
 
 #post-form-container {
 	display: none;
 	position: absolute;
+	top: 150px;
 	background-color: #FFFFFF;
-	border: 1px solid #000000;
+	border: 3px solid #AAAAAA;
 	width: 700px;
 	height: 600px;
 	padding: 20px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.settings-menu-item {
+	padding: 8px 8px 5px 8px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.settings-menu-item a {
+	padding: 8px 8px 6px 8px;
+	text-decoration: none;
+	color: white;
+}
+
+.settings-active-menu-item {
+	color: black;
+	padding: 8px 8px 6px 8px;
+	background-color: white;
+	border-top: 1px solid #666;
+	border-right: 1px solid #666;
+	border-left: 1px solid #666;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.settings-label {
+
+	float: left;
+	width: 120px;
+	text-align: right;
+	padding-top: 10px;
+	color: #333;
+
+}
+
+.fixed {
+	margin: 20px 0 20px;
+}
+
+.input {
+	margin-left: 140px;
 }

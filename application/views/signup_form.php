@@ -18,19 +18,19 @@
 	
 	<p>
 		<label for="username">Username: </label>
-		<input type="text" id="username" />
+		<input type="text" id="username" name="username" />
 	</p>
 	<p>
 		<label for="email">E-mail: </label>
-		<input type="text" id="email" />
+		<input type="text" id="email" name="email" />
 	</p>	
 	<p>
 		<label for="password">Password: </label>
-		<input type="text" id="password" />
+		<input type="password" id="password" name="password" />
 	</p>
 	<p>
 		<label for="passconf">Confirm Password: </label>
-		<input type="text" id="passconf" />
+		<input type="password" id="passconf" name="passconf" />
 	</p>	
 	<p>
 		<?php echo form_submit('submit','Create my account'); ?>
