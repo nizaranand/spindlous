@@ -8,21 +8,44 @@ class Tag extends CI_Model {
 		
 	}
 	
-	function add($data) {
+	function add($name) {
 		
-		$t = $this->mongo_db->get_where('tags', array('name' => $data['name']));
-		if (sizeof($t) == 1) {
-			$this->mongo_db->update('tags', array('saved' => $t[0]['saved'] + 1));
+		if ($this->exists($name)) {
+			$this->mongo_db->where(array('name' => $name))->inc(array('saved' => 1))->update('tags');
 		} else {
-			$data['first_saved'] = date('m-d-Y H:i:s');
+			$data = array('name' => $name, 'saved' => 1, 'first_saved' => date('m-d-Y H:i:s'));
 			$this->mongo_db->insert('tags', $data);
 		}
 		
 	}
 	
-	function get($data) {
+	function remove($name) {
 		
-		return $this->mongo_db->get_where('tags', $data);
+		if ($this->exists($name)) {
+			$this->mongo_db->where(array('name' => $name))->dec(array('saved' => 1))->update('tags');
+		}
+		
+	}
+	
+	function get_by_name($name) {
+		
+		$t = $this->mongo_db->where(array('name' => $name))->limit(1)->get('tags');
+		if (sizeof($t) == 1) {
+			return $t[0];
+		} else {
+			return FALSE;
+		}
+		
+	}
+	
+	function exists($name) {
+		
+		$t = $this->mongo_db->where(array('name' => $name))->limit(1)->get('tags');
+		if (sizeof($t) == 1) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 		
 	}
 

@@ -17,34 +17,46 @@ class User extends CI_Model {
 		$data['password'] = encrypt_pw($data['password'], $data['salt']);		
 		$data['profile_pic'] = "images/default.jpg";
 		
-		$this->mongo_db->insert('users', $data);		
-		$this->session->set_userdata('user', $this->get($data['username']));		
+		$this->mongo_db->insert('users', $data);	
 	}
 	
-	public function get($username) {
+	public function authenticate($username, $password) {
 		
-		$u = $this->mongo_db->where(array('username'=>$username))->get('users');
-		if(sizeof($u) > 0) {
-			return $u;
+		$this->load->helper('encryption_helper');
+		
+		if ($u = $this->get_by_username($username)) {
+			if ($u['password'] == encrypt_pw($password, $u['salt'])) {
+				return $u;
+			}
+			return FALSE;
+		}
+		return FALSE;
+	}
+	
+	public function get_by_username($username) {
+		
+		$u = $this->mongo_db->where(array('username'=>$username))->limit(1)->get('users');
+		if(sizeof($u) == 1) {
+			return $u[0];
 		} else {
-			return array();
+			return FALSE;
 		}
 	}
 	
 	public function get_by_id($user_id) {
 		
-		$u = $this->mongo_db->where(array('_id'=>$user_id))->get('users');
-		if(sizeof($u) > 0) {
-			return $u;
+		$u = $this->mongo_db->where(array('_id'=>$user_id))->limit(1)->get('users');
+		if(sizeof($u) == 1) {
+			return $u[0];
 		} else {
-			return array();
+			return FALSE;
 		}
 	
 	}
 	
 	public function update($where, $data) {
 		
-		$this->mongo_db->where($where)->update('users', $data);
+		$this->mongo_db->where($where)->set($data)->update('users');
 		
 	}
 	
@@ -58,6 +70,12 @@ class User extends CI_Model {
 	
 		return ( $this->mongo_db->where(array('email' => $email))->count('users') > 0 );
 	
+	}
+	
+	public function delete($username) {
+		
+		$this->mongo_db->where(array('username' => $username))->delete('users');
+		
 	}
 	
 }

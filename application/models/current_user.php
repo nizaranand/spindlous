@@ -16,14 +16,12 @@ class Current_User {
 				return FALSE;
 			}
 			
-			$u = $CI->User->get_by_id($user_id);
-			
-			if (!(sizeof($u) > 0)) {
+			if (!($u = $CI->User->get_by_id($user_id))) {
 
                 return FALSE;
             }
 	
-			self::$user = $u[0];
+			self::$user = $u;
 		}
 		
 		return self::$user;
@@ -34,25 +32,16 @@ class Current_User {
 		self::$user = null;
 		
 		$CI =& get_instance();
-		$CI->load->helper('encryption_helper');		
-		$u = $CI->User->get($username);
-		
-		if (sizeof($u) > 0) {			
-			
-			if($u[0]['password'] == encrypt_pw($password, $u[0]['salt'])) {
+		if ($u = $CI->User->authenticate($username, $password)) {			
 				
-				$CI->session->set_userdata(array('user_id'=>$u[0]['_id']) );
+			$CI->session->set_userdata(array('user_id'=>$u['_id']) );
 				
-				self::$user = $u[0];
+			self::$user = $u;
 				
-				log_message('debug', $CI->session->userdata('user_id'));
+			log_message('debug', $CI->session->userdata('user_id'));
 				
-				
-				
-				return TRUE;
-			}
+			return TRUE;
 		}
-		
 		return FALSE;		
 	}
 

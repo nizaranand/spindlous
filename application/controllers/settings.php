@@ -12,7 +12,7 @@ class Settings extends CI_Controller {
 	
 		if($u = Current_User::user()) {		
 		
-			$data = array('main_content' => 'settings_account');
+			$data = array('main_content' => 'settings_account', 'user_info' => $u);
 			$this->load->view('includes/template', $data);
 			
 		}
@@ -29,7 +29,7 @@ class Settings extends CI_Controller {
 	
 		if($u = Current_User::user()) {		
 		
-			$data = array('main_content' => 'settings_password');
+			$data = array('main_content' => 'settings_password', 'user_info' => $u);
 			$this->load->view('includes/template', $data);
 			
 		}
@@ -45,7 +45,7 @@ class Settings extends CI_Controller {
 	
 		if($u = Current_User::user()) {		
 		
-			$data = array('main_content' => 'settings_profile');
+			$data = array('main_content' => 'settings_profile', 'user_info' => $u);
 			$this->load->view('includes/template', $data);
 			
 		}
@@ -63,7 +63,7 @@ class Settings extends CI_Controller {
 		
 			if ( ($data['username'] = $this->input->post('username')) && ($data['email'] = $this->input->post('email')) ) {
 			
-				$this->User->update(array('username' => $u->username), $data);
+				$this->User->update(array('username' => $u['username']), $data);
 				redirect('settings');
 				
 			}

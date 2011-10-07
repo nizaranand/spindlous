@@ -13,13 +13,13 @@
 		<div class="fixed">			
 			<label class="settings-label" for="username">Username: </label>
 			<div class="input">
-				<input type="text" name="username" value="">
+				<input type="text" name="username" value="<?php echo $u['username'] ?>">
 			</div>
 		</div>
 		<div class="fixed">		
 			<label class="settings-label" for="email">Email: </label>
 			<div class="input">
-				<input type="text" name="email" value="">
+				<input type="text" name="email" value="<?php echo $u['email'] ?>">
 			</div>
 		</div>
 		<div class="fixed">	

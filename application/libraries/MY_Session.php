@@ -97,7 +97,7 @@ class MY_Session extends CI_Session {
 				$this->CI->mongo_db->where('user_agent', $session['user_agent']);
 			}
 
-			$query = $this->CI->mongo_db->get($this->sess_table_name);
+			$query = $this->CI->mongo_db->limit(1)->get($this->sess_table_name);
 
 			// No result?  Kill it!
 			if (sizeof($query) == 0)
@@ -107,8 +107,8 @@ class MY_Session extends CI_Session {
 			}
 
 			// Is there custom data?  If so, add it to the main session array
-			$r vow = $query[0];
-			if (isset($row->user_data) AND $row->user_data != '')
+			$row = $query[0];
+			if (isset($row['user_data']) AND $row['user_data'] != '')
 			{
 				$custom_data = $this->_unserialize($row['user_data']);
 
@@ -166,7 +166,7 @@ class MY_Session extends CI_Session {
 
 		// Run the update query
 		$this->CI->mongo_db->where('session_id', $this->userdata['session_id']);
-		$this->CI->mongo_db->update($this->sess_table_name, array('last_activity' => $this->userdata['last_activity'], 'user_data' => $custom_userdata));
+		$this->CI->mongo_db->set(array('last_activity' => $this->userdata['last_activity'], 'user_data' => $custom_userdata))->update($this->sess_table_name);
 
 		// Write the cookie.  Notice that we manually pass the cookie data array to the
 		// _set_cookie() function. Normally that function will store $this->userdata, but
@@ -245,7 +245,7 @@ class MY_Session extends CI_Session {
 				$cookie_data[$val] = $this->userdata[$val];
 			}
 
-			$this->CI->mongo_db->where(array('session_id' => $old_sessid))->update($this->sess_table_name, array('last_activity' => $this->now, 'session_id' => $new_sessid));
+			$this->CI->mongo_db->where(array('session_id' => $old_sessid))->set(array('last_activity' => $this->now, 'session_id' => $new_sessid))->update($this->sess_table_name);
 		}
 
 		// Write the cookie

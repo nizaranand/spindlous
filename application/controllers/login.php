@@ -21,8 +21,6 @@ class Login extends CI_Controller {
 
 			$u = Current_User::user();
 			
-			log_message('debug', $u['password']);
-			
 			$this->index();
 			return;
 		}

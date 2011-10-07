@@ -9,15 +9,14 @@ class Test extends CI_Controller {
 	
 	function index() {
 		
+		$this->load->Model('Tag');
 		
-		echo Current_User::login('john','alkali');
+		$this->Tag->add('Tag!');
 		
-		$u = Current_User::user();
+		$t = $this->Tag->get('Tag!');
 		
+		var_dump($t);
 		
-		
-		
-		echo $u['username'];
 	
 	}	
 }

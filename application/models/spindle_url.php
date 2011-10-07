@@ -9,9 +9,8 @@ Class Spindle_url extends CI_Model {
 	
 	function add($data) {
 		
-		$u = $this->mongo_db->get_where('urls', array('url' => $data['url']));
-		if (sizeof($u) > 0) {
-			$this->mongo_db->update('urls', array('saved' => ($u[0]['saved'] + 1)));
+		if ($u = $this->get_by_url($data['url'])) {
+			$this->mongo_db->where(array('url' =>$data['url']))->inc(array('saved' => 1))->update('urls');
 		} else {
 			$data['first_saved'] = date('m-d-Y H:i:s');
 			$data['saved'] = 1;
@@ -20,10 +19,10 @@ Class Spindle_url extends CI_Model {
 		
 	}
 	
-	function get($data) {
+	function get_by_url($url) {
 		
-		$u = $this->mongo_db->get_where('urls', $data);
-		if(sizeof($u) > 0) {
+		$u = $this->mongo_db->where(array('url' => $url))->limit(1)->get('urls');
+		if(sizeof($u) == 1) {
 			return $u[0];
 		} else {
 			return FALSE;

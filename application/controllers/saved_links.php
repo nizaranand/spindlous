@@ -10,7 +10,7 @@ class Saved_links extends CI_Controller {
 	function index() {
 		if($u = Current_User::user()) {
 					
-			$s = $this->Spindlet->get(array('author' => $u->username, 'type' => 'link'));
+			$s = $this->Spindlet->get(array('author' => $u['username'], 'type' => 'link'));
 			$data = array('main_content' => 'links',
 						  'spool' => $s);
 			$this->load->view('includes/template', $data);
