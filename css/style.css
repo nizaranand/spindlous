@@ -1,7 +1,8 @@
 body {
 	font-family:Arial;
 	font-size: 14px;
-	background-color: #E6E8FA;
+	/*background-color: #E6E8FA;*/
+	backgorund-color: #FFFFFF;
 	color: #aaaaaa;
 }
 
@@ -100,13 +101,11 @@ span.time {
 	height: 30px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 75px;
+	margin-top: 75px;	
 	background-color: #FFFFFF;
 	border: none;
 	padding-top: 10px;
-	border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
+	
 }
 #new-post-button a {
 	color: black;
@@ -114,6 +113,14 @@ span.time {
 	height: 100%;
 	text-decoration: none;
 	padding: 10px 70px 10px 65px;
+}
+
+#new-post-button:hover {
+
+	-moz-box-shadow: 0 0 3px 3px #EEE;
+	-webkit-box-shadow: 0 0 3px 3px #EEE;
+	box-shadow: 0 0 3px 3px #EEE;
+	
 }
 
 #top-bar {
@@ -133,10 +140,14 @@ span.time {
 		color-stop(0.24, rgb(36,36,36)),
 		color-stop(0.62, rgb(66,66,66))
 		);
-	   -moz-box-shadow: 0 0 4px 4px #888;
-	-webkit-box-shadow: 0 0 4px 4px #888;
-	        box-shadow: 0 0 4px 4px #888;
+	   -moz-box-shadow: 0 0 5px 5px #DDD;
+	-webkit-box-shadow: 0 0 5px 5px #DDD;
+	        box-shadow: 0 0 5px 5px #DDD;
 
+}
+
+#top-bar a{
+	color: #FFF;
 }
 #link-input {
 	margin-left: auto;
@@ -253,6 +264,10 @@ span.time {
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 }
+
+#settings-container h2{
+	color: #BD2031;
+}
 #settings-inner {
 	padding: 10px
 }
@@ -274,24 +289,33 @@ span.time {
 	width: 830px;
 	color: #FFFFFF;
 	padding: 50px 10px 5px 10px;
-	background-color: #AAAAAA;
 	position: relative;	
-	border-bottom: 1px solid #666;
+	border-bottom: 1px solid #AAA;
+	/*
 	-webkit-border-top-left-radius: 6px;
 	-webkit-border-top-right-radius: 6px;
 	-moz-border-radius-topleft: 6px;
 	-moz-border-radius-topright: 6px;
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
-	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.24, rgb(36,36,36)),
+		color-stop(0.62, rgb(66,66,66))
+		);	*/
 }
 
 
 
 a {
-	color: #FFCA40;
+	color: #E6E8FA;
 	font-weight: bold;
+	text-decoration: none;
 }
+
+
 
 a:hover {
 	color: #aaaaaa;
@@ -366,18 +390,92 @@ input, textarea, select {
 }
 
 #profile_container {
-	width: 70%;
-	background-color: #FFFFFF;
-	border: none;
+	
+	width: 800px;
 	display: block;
 	margin-top: 25px;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 5px;
+	padding: 0px;
 	height: 700px;
-	border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
+}
+
+.post-container h2 a{
+	color: #BD2031;
+}
+
+.post-container h2 a:hover{
+	color: grey;
+	
+}
+
+.post-container a{
+	color: #444444;
+}
+
+.post-container a:hover{
+	color: #666666;
+}
+
+.outer-post-container {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+
+.post-container:hover{
+	-webkit-box-shadow: 0px 0px 11px #CCC;
+	-moz-box-shadow:    0px 0px 11px #CCC;
+	box-shadow:         0px 0px 11px #CCC;
+	z-index: 20;
+
+}
+
+.post-container h2 {
+	color: #BD2031;
+	margin: 5px 0px 0px 0px;
+	font-size: 17px;
+}
+
+p.author {
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size: 10px;
+}
+
+.post-container {
+
+	min-height: 60px;
+
+	background-color: #FFFFFF;
+	border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #EEEEEE;
+	padding: 0px 15px 5px 5px;
+	margin: 0px 0px 0px 125px;
+	width: 625px;
+	
+}
+
+.profile-top {
+
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #EEEEEE;
+	padding: 15px 15px 15px 15px;
+	margin-top: 0px;
+	margin-left: 125px;
+	height: 2px;
+	width: 615px;
+
+}
+
+.profile-bottom {
+
+	background-color: #FFFFFF;
+	padding: 0px 15px 15px 15px;
+	margin-left: 125px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	height: 30px;
+
 }
 
 #post-form-container {
@@ -385,13 +483,28 @@ input, textarea, select {
 	position: absolute;
 	top: 150px;
 	background-color: #FFFFFF;
-	border: 3px solid #AAAAAA;
 	width: 700px;
-	height: 600px;
 	padding: 20px;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
+	-webkit-box-shadow: 0px 0px 11px #BBB;
+	-moz-box-shadow:    0px 0px 11px #BBB;
+	box-shadow:         0px 0px 11px #BBB;
+}
+
+#post-form-container input[type="text"] {
+	
+	width: 200px;
+	font-weight: bold;
+	padding: 8px;
+
+	border: 1px solid #AAA;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	
+
 }
 
 ul {
@@ -399,6 +512,11 @@ ul {
 }
 
 .settings-menu-item {
+	background-color: white;
+	color: black;
+	border-top: 1px solid #AAA;
+	border-right: 1px solid #AAA;
+	border-left: 1px solid #AAA;
 	padding: 8px 8px 5px 8px;
 	-webkit-border-top-left-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
@@ -408,19 +526,28 @@ ul {
 	border-top-right-radius: 4px;
 }
 
+.settings-menu-item:hover {
+
+	background-color: #EEE;
+
+}
+
 .settings-menu-item a {
 	padding: 8px 8px 6px 8px;
 	text-decoration: none;
-	color: white;
+	color: black;
+	font-weight: normal;
 }
 
 .settings-active-menu-item {
+	font-weight: bold;
+	text-decoration: bold;
 	color: black;
 	padding: 8px 8px 6px 8px;
 	background-color: white;
-	border-top: 1px solid #666;
-	border-right: 1px solid #666;
-	border-left: 1px solid #666;
+	border-top: 1px solid #AAA;
+	border-right: 1px solid #AAA;
+	border-left: 1px solid #AAA;
 	-webkit-border-top-left-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
 	-moz-border-radius-topleft: 4px;
@@ -429,7 +556,7 @@ ul {
 	border-top-right-radius: 4px;
 }
 
-.settings-label {
+.label {
 
 	float: left;
 	width: 120px;
@@ -446,3 +573,57 @@ ul {
 .input {
 	margin-left: 140px;
 }
+.input-checkbox {
+	margin-left: 140px;
+	padding-top: 10px;
+}
+
+.comments {
+	margin: 0 0 0 15px;
+	color: #444444;
+	font-size: 10px;
+	display: none;
+}
+
+.picture {
+	height: 50px;
+	width: 90px;
+	float: left;
+	background-position:top left;
+	background-repeat: no-repeat;
+	text-align: right;
+	padding: 10px 0px 0px 15px;
+}
+
+.picture a {
+	color: #444;
+}
+
+.picture a:hover {
+	color: #666;
+}
+.edit {
+
+	float: right;
+	margin-top: 10px;
+}
+
+.body {
+	color: #777777;
+	margin: 5px 5px 5px 15px;
+}
+
+.little-body {
+	color: #777777;
+	margin: 15px 5px 5px 0px;
+}
+
+.close {
+
+	position: absolute;
+	top: 5px;
+	left: 680px;
+
+}
+
+

@@ -51,6 +51,8 @@ $route['saved_links'] = 'saved_links';
 $route['signup'] = 'signup';
 $route['spool'] = 'spool';
 $route['test'] = 'test';
+$route['settings'] = 'settings';
+$route['unit_test'] = 'unit_test';
 
 $route['ajax/(:any)'] = 'ajax/$1';
 $route['api/(:any)'] = 'api/$1';
@@ -62,10 +64,11 @@ $route['saved_links/(:any)'] = 'saved_links/$1';
 $route['signup/(:any)'] = 'signup/$1';
 $route['spool/(:any)'] = 'spool/$1';
 $route['test/(:any)'] = 'test/$1';
+$route['settings/(:any)'] = 'settings/$1';
 
 $route[''] = '';
 
-//$route['(:any)'] = 'profile/display_by_username/$1';
+$route['(:any)'] = 'post/display_by_sid/$1';
 
 
 /* End of file routes.php */

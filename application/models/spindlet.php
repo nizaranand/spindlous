@@ -13,14 +13,20 @@ Class Spindlet extends CI_Model {
 		$this->load->helper('id_gen_helper');
 		$data['sid'] = get_unique_id();
 		if ( $data['url'] == '' ) {
-			$url_data['url'] = base_url() . $data['shortid'];
+			$url_data['url'] = base_url() . $data['sid'];
 			$data['url'] = $url_data['url'];
 		} else {
 			$url_data['url'] = $data['url'];
 		}
 		$url_data['username'] = $data['author'];
 		$this->Spindle_Url->add($url_data);
+		$data['profile_pic'] = $this->User->get_picture($data['author']);
 		$data['created'] = date('m-d-Y H:i:s');
+		$data['nshares'] = 0;
+		$data['upvotes'] = 0;
+		$data['downvotes'] = 0;
+		$data['vote_diff'] = 0;
+		$data['ncomments'] = 0;
 		$this->mongo_db->insert('spindlets', $data);
 	}
 	
@@ -37,7 +43,8 @@ Class Spindlet extends CI_Model {
 	
 	public function get($data) {
 		
-		return $this->mongo_db->get_where('spindlets', $data);
+		return $this->mongo_db->where($data)->order_by(array('created' => -1))->get('spindlets');
+		
 		
 	}
 	
@@ -90,5 +97,6 @@ Class Spindlet extends CI_Model {
 		$this->mongo_db->where(array('sid' => $sid))->set($data)->update('spindlets');
 		
 	}
+	
 }
 	

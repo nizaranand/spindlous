@@ -115,16 +115,27 @@ var invalid_passwords = new Array( "password", "test", "testing", "stupid", "spi
 
 $(document).ready(function() {
 
-	$('.settings-menu-item').mouseover(function() {
+	$('.edit').click(function() {
 	
-		$(this).css({"background-color": "#DDDDDD", "color": "#333333"});
+		
 	
 	});
 	
-	$('.settings-menu-item').mouseleave(function() {
+	$('#body').focus(function() {
 	
-		$(this).css({"background-color": "#AAAAAA", "color": "white"});
+		$(this).attr("rows", "8");
 	
+	});
+	
+	$('.post-container').mouseover(function() {
+	
+		$(this).find(".comments").show();	
+	});
+	
+	$('.post-container').mouseout(function() {
+		
+		$(this).find(".comments").hide();
+		
 	});
 
 	$('.new').click(function(e) {

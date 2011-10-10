@@ -13,8 +13,9 @@ class Profile extends CI_Controller {
 		if($u = Current_User::user()) {		
 		
 			$s = $this->Spindlet->get(array('author' => $u['username'], 'published' => 'true'));
-			$data = array('main_content' => 'profile',
-						         'spool' => $s);
+			$data = array('main_content'  => 'profile',
+						         'spool'  => $s,
+								 'type'   => 'self');
 			$this->load->view('includes/template', $data);
 			
 		}
@@ -24,6 +25,16 @@ class Profile extends CI_Controller {
 			
 		}
 		
+	
+	}
+	
+	public function display_by_username($username) {
+	
+		$s = $this->Spindlet->get(array('author' => $username, 'published' => 'true'));
+			$data = array('main_content'  => 'profile',
+						         'spool'  => $s,
+								 'type'   => 'other');
+		$this->load->view('includes/tempalte', $data);
 	
 	}
 

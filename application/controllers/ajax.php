@@ -4,7 +4,7 @@ class Ajax extends CI_Controller {
 
 	public function add_post() {
 		if($u = Current_User::user()) {
-			$data['author'] = $u->username;
+			$data['author'] = $u['username'];
 			$data['url'] = $this->input->post('url');
 			$data['title'] = $this->input->post('title');
 			$data['body'] = $this->input->post('body');

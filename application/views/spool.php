@@ -26,9 +26,9 @@
 	<div id = "link-container">
 		<?php if (sizeof($spool) > 0) { ?>
 			<?php foreach($spool as $row)  { ?>
-			<p><?php echo $row->url; ?>
-			<?php echo $row->title; ?>
-			<?php echo $row->body; ?></p>
+			<p><?php echo $row['url']; ?>
+			<?php echo $row['title']; ?>
+			<?php echo $row['body']; ?></p>
 		<?php } } ?>
 		
 		

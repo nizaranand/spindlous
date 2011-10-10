@@ -59,14 +59,34 @@ class Settings extends CI_Controller {
 	
 	public function submit() {
 	
+		$this->output->enable_profiler(TRUE);
+	
 		if($u = Current_User::user()) {		
 		
-			if ( ($data['username'] = $this->input->post('username')) && ($data['email'] = $this->input->post('email')) ) {
+			if ( $this->input->post('hidden') == "account" )  {
 			
+				$data['username'] = $this->input->post('username');
+				$data['email'] = $this->input->post('email');
 				$this->User->update(array('username' => $u['username']), $data);
 				redirect('settings');
 				
 			}
+			
+			if ( $this->input->post('hidden') == "password" ) {
+			
+				$this->User->change_password($u['username'], $this->input->post('current_password'), $this->input->post('new_password'));
+				redirect('settings');
+			
+			}
+			
+			if ( $this->input->post('hidden') == "profile" ) {
+			
+				$data['full_name'] = $this->input->post('full_name');
+				$this->User->update(array('username' => $u['username']), $data);
+				redirect('settings');
+				
+			}
+			
 			
 			
 		} else {

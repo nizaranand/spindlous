@@ -1,6 +1,8 @@
 <?php
 class Home extends CI_Controller {
 
+	
+
 	public function index() {
 		
 		if($u = Current_User::user()){		
