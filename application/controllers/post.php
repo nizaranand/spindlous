@@ -1,6 +1,6 @@
 <?php
 
-class Profile extends CI_Controller {
+class Post extends CI_Controller {
 
     public function __construct() {	
         
@@ -17,6 +17,8 @@ class Profile extends CI_Controller {
 	public function display_by_sid($sid) {
 	
 		$s = $this->Spindlet->get(array('sid' => $sid, 'published' => 'true'));
+		
+		echo "hello";
 		
 		if (sizeof($s) == 1) {
 			$data = array('main_content'  => 'post',

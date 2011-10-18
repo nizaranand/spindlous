@@ -53,6 +53,7 @@ $route['spool'] = 'spool';
 $route['test'] = 'test';
 $route['settings'] = 'settings';
 $route['unit_test'] = 'unit_test';
+$route['post'] = 'post';
 
 $route['ajax/(:any)'] = 'ajax/$1';
 $route['api/(:any)'] = 'api/$1';
@@ -65,6 +66,8 @@ $route['signup/(:any)'] = 'signup/$1';
 $route['spool/(:any)'] = 'spool/$1';
 $route['test/(:any)'] = 'test/$1';
 $route['settings/(:any)'] = 'settings/$1';
+$route['unit_test/(:any)'] = 'unit_test/$1';
+$route['post/(:any)'] = 'post/$1';
 
 $route[''] = '';
 

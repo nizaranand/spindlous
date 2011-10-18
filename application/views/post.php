@@ -1,4 +1,4 @@
-<div id="profile_container">
+<div id="post_container">
 
 
 	<div class="outer-post-container">
@@ -7,7 +7,7 @@
 			<p class="author"><a href="<?php echo base_url() . $post['author'];?>" ><?php echo $post['author']; ?></a></p>
 		</div> 				
 		
-		<div id="<?php echo $post['sid']; ?>"class="post-container">
+		<div id="<?php echo $post['sid']; ?>"class="post-container-1">
 		
 			<?php if ($post['title'] != '') { ?>
 				<h2><a href="<?php echo $post['url']; ?>" class="post-title"><?php echo $post['title']; ?></a></h2>
@@ -27,5 +27,9 @@
 		</div>
 	</div>
 	
+	<div id="tab-container">
 	
+		<span class="settings-active-menu-item" >Comments</span> <span class="settings-menu-item" ><a href="<?php echo base_url();?>settings/password">Shares</a></span> <span class="settings-menu-item" ><a href="<?php echo base_url();?>settings/profile">Tags</a></span>
+	
+	</div>
 </div>

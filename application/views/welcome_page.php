@@ -29,7 +29,7 @@
 	</p>
 
 	<?php echo form_close(); ?>
-	<p>
+	<p class="new_user">
 		<?php echo anchor('signup','Create an Account'); ?>
 	</p>
 

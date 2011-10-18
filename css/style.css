@@ -248,6 +248,12 @@ span.time {
 	margin-bottom:3px;
 }
 
+#spool li a {
+	
+	color: #BD2031;
+	
+}
+
 #settings-container {
 	margin-left: auto;
 	margin-right: auto;
@@ -319,7 +325,7 @@ a {
 
 a:hover {
 	color: #aaaaaa;
-}https://twitter.com/#!/amandapalmer/status/114540252164661251
+}
 
 input, textarea, select {
 	font-family:inherit;
@@ -400,6 +406,16 @@ input, textarea, select {
 	height: 700px;
 }
 
+#post_container {
+	
+	width: 800px;
+	display: block;
+	margin-top: 75px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0px;
+}
+
 .post-container h2 a{
 	color: #BD2031;
 }
@@ -455,6 +471,30 @@ p.author {
 	
 }
 
+.post-container-1 {
+
+	min-height: 60px;
+	background-color: #FFFFFF;
+	padding: 20px;
+	margin: 0px 0px 0px 125px;
+	width: 625px;
+	-webkit-box-shadow: 0px 0px 11px #CCC;
+	-moz-box-shadow:    0px 0px 11px #CCC;
+	box-shadow:         0px 0px 11px #CCC;
+	
+}
+
+.post-container-1 h2 {
+	
+	color: #BD2031;
+	margin: 5px 0px 0px 0px;
+	
+}
+
+.post-container-1 h2 a{
+	color: #BD2031;
+}
+
 .profile-top {
 
 	background-color: #FFFFFF;
@@ -505,6 +545,12 @@ p.author {
 	-webkit-border-radius: 4px;
 	
 
+}
+
+#post-form-container a {
+	
+	color: #BD2031;
+	
 }
 
 ul {
@@ -625,5 +671,11 @@ ul {
 	left: 680px;
 
 }
+
+.new_user a{
+	color: #444;
+	
+}
+
 
 

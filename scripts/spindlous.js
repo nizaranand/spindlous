@@ -209,8 +209,6 @@ $(document).ready(function() {
 			success: function(json) {
 				var images = JSON.parse(json);
 				
-				images = 
-				
 				$('.image-preview').show();
 				$('#link-image').attr('src', images[i].src);
 				$('#next-image').bind('click', function(event) {

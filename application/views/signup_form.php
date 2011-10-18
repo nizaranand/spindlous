@@ -36,7 +36,7 @@
 		<?php echo form_submit('submit','Create my account'); ?>
 	</p>
 	<?php echo form_close(); ?>
-	<p>
+	<p class="new_user">
 		<?php echo anchor('login','Login Form'); ?>
 	</p>
 
