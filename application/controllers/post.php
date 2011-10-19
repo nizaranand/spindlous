@@ -18,8 +18,6 @@ class Post extends CI_Controller {
 	
 		$s = $this->Spindlet->get(array('sid' => $sid, 'published' => 'true'));
 		
-		echo "hello";
-		
 		if (sizeof($s) == 1) {
 			$data = array('main_content'  => 'post',
 						          'post'  => $s[0]);

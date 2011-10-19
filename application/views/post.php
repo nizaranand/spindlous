@@ -18,7 +18,7 @@
 			<?php } else { ?>
 				<div class="post-body-container">
 					<p class="little-body"><?php echo $post['body']; ?></p>
-					<p class="comments"><a href="<?php echo $post['url']; ?>" >Comments[<?php echo $post['ncomments'];?>] Shares[<?php echo $post['nshares'];?>]</a></p>
+					<p class="little-comments"><a href="<?php echo $post['url']; ?>" >Comments[<?php echo $post['ncomments'];?>] Shares[<?php echo $post['nshares'];?>]</a></p>
 				</div>
 			<?php } ?>
 			
