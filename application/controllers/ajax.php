@@ -17,6 +17,39 @@ class Ajax extends CI_Controller {
 		}
 	}
 	
+	public function add_comment() {
+		if($u = Current_User::user()) {
+			$data['author'] = $u['username'];
+			$data['url'] = $this->input->post('url');
+			$data['title'] = '';
+			$data['body'] = $this->input->post('body');
+			$data['tags'] = explode(' ', $this->input->post('tags'));
+			$data['published'] = $this->input->post('published');
+			$data['type'] = $this->input->post('type');
+			$data['parent'] = $this->input->post('parent');
+			$data['root'] = $this->input->post('root');
+			$this->Spindlet->increment($data['parent'], 'ncomments');
+			if ($data['parent'] != $data['root']) {
+				$this->Spindlet->increment($data['root'], 'ncomments');
+			}
+			$this->Spindlet->create($data);
+		}
+	}
+	
+	public function upvote() {
+		if($u = Current_User::user()) {
+			$this->load->model("Vote");
+			$this->Vote->upvote($this->input->post("sid"), $u["username"]);
+		}
+	}
+	
+	public function downvote() {
+		if($u = Current_User::user()) {
+			$this->load->model("Vote");
+			$this->Vote->downvote($this->input->post("sid"), $u["username"]);
+		}
+	}
+	
 	public function username_check() {
 		
 		$username = $this->input->post('username');

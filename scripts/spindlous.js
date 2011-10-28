@@ -109,16 +109,140 @@ function hideError(element) {
 
 }
 
+function tab_change(event, _this) {
+
+	$("#tabs li").removeClass("menu-item");
+	$("#tabs li").removeClass("active-menu-item");
+	$("#tabs li").addClass("menu-item");
+	$("#comments-tab").html("<a href='/' >Comments</a>");
+	$("#shares-tab").html("<a href='/' >Shares</a>");
+	$("#tags-tab").html("<a href='/' >Tags</a>");
+	
+	if ($(_this).attr("id") === "comments-tab") {
+	
+		$("#comments-tab").html("Comments");
+		$("#comment-container").show();
+		$("#shares-container").hide();
+		$("#tags-container").hide();
+	
+	} else if ($(_this).attr("id") === "shares-tab") {
+	
+		$("#shares-tab").html("Shares");
+		$("#comment-container").hide();
+		$("#shares-container").show();
+		$("#tags-container").hide();
+	
+	} else if ($(_this).attr("id") === "tags-tab") {
+		
+		$("#tags-tab").html("Tags");
+		$("#comment-container").hide();
+		$("#shares-container").hide();
+		$("#tags-container").show();
+	
+	}
+	
+	$(_this).removeClass("menu-item");
+	$(_this).addClass("active-menu-item");
+	
+	event.preventDefault();
+
+}
+
 var invalid_usernames = new Array( "admin", "administrator", "ajax", "api", "home", "login", "logout", "profile", "saved_links", "signup", "spool", "test", "iphone", "android" );
 
 var invalid_passwords = new Array( "password", "test", "testing", "stupid", "spindlous", "123456", "secret" );
 
 $(document).ready(function() {
 
-	$('.edit').click(function() {
+	$(".active-menu-item").click(function(event) {
 	
+		tab_change(event, this);
 		
+	});
+
+	$(".menu-item").click(function(event) {
+		
+		tab_change(event, this);
 	
+	});
+	
+	$(".upvote").click(function() {
+		$(this).addClass("clicked_upvote");
+		$(this).removeClass("upvote");
+		$(this).next(".clicked_downvote").addClass("downvote");
+		$(this).next(".clicked_downvote").removeClass("clicked_downvote");
+		var sid = $(this).closest(".outer-comment-container").attr("id");
+		$.ajax({
+			type: "POST",
+			url: "http://localhost/spindlous/ajax/upvote",
+			data: { "sid" : sid },
+			success: function(data) {
+				
+			}
+		});
+	});
+	
+	$(".downvote").click(function() {
+		$(this).addClass("clicked_downvote");
+		$(this).removeClass("downvote");
+		$(this).prev(".clicked_upvote").addClass("upvote");
+		$(this).prev(".clicked_upvote").removeClass("clicked_upvote");
+		var sid = $(this).closest(".outer-comment-container").attr("id");
+		$.ajax({
+			type: "POST",
+			url: "http://localhost/spindlous/ajax/downvote",
+			data: { "sid" : sid },
+			success: function(data) {
+				
+			}
+		});
+	});
+
+	$('.new_comment').click(function() {
+	
+		$('.input_container').hide();	
+		$(this).parent(".add_comment").prev('.input_container').show();
+		
+		if ( $(this).val() === "Save" ) {
+		
+			var body = $(this).closest(".add_comment_container").children('.input_container').children(".new_comment_input").val();
+			
+			if (body != "") {
+				
+				var postData = {
+					
+					"body"      : body,
+					"published" : "true",
+					"type"      : "comment",
+					"parent"    : $("#parent_comment").val(),
+					"root"      : $("#root_comment").val()
+				
+				}
+			
+				$.ajax({
+					type: "POST",
+					url: "http://localhost/spindlous/ajax/add_comment",
+					data: postData,
+					success: function(data) {
+						$(this).closest('.new-comment-container').hide();
+						
+					}
+				});
+
+			}
+		
+		} else {
+			$(this).val("Save");
+		}
+	
+	});
+	
+	$('.reply').click(function(event) {
+		$("#first_new_comment").val("New Comment");
+		$('.input_container').hide();	
+		$(this).prev('.input_container').show();
+		event.preventDefault();
+		$("#parent_comment").val($(this).closest(".outer-comment-container").attr("id"));
 	});
 	
 	$('#body').focus(function() {
@@ -135,6 +259,17 @@ $(document).ready(function() {
 	$('.post-container').mouseout(function() {
 		
 		$(this).find(".comments").hide();
+		
+	});
+	
+	$('.little-post-container').mouseover(function() {
+	
+		$(this).find(".little-comments").show();	
+	});
+	
+	$('.little-post-container').mouseout(function() {
+		
+		$(this).find(".little-comments").hide();
 		
 	});
 

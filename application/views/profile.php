@@ -11,31 +11,36 @@
 		
 		<?php foreach ($spool as $row) { ?>
 			
-			<div class="outer-post-container">
-				<div class="picture">
-					<img src="<?php echo base_url() . $row['profile_pic']; ?>" height="35" width="35"/>
-					<p class="author"><a href="<?php echo base_url() . $row['author'];?>" ><?php echo $row['author']; ?></a></p>
-				</div> 				
-				
-				<div id="<?php echo $row['sid']; ?>"class="post-container">
-				
-					<?php if ($row['title'] != '') { ?>
-						<h2><a href="<?php echo $row['url']; ?>" class="post-title"><?php echo $row['title']; ?></a></h2>
-						<div class="post-body-container">
-							<p class="body"><?php echo $row['body']; ?></p>
-							<p class="comments"><a href="<?php echo $row['url']; ?>" >Comments[<?php echo $row['ncomments'];?>] Shares[<?php echo $row['nshares'];?>]</a></p>
-						</div>
-					<?php } else { ?>
-						<div class="post-body-container">
-							<p class="little-body"><?php echo $row['body']; ?></p>
-							<p class="comments"><a href="<?php echo $row['url']; ?>" >Comments[<?php echo $row['ncomments'];?>] Shares[<?php echo $row['nshares'];?>]</a></p>
-						</div>
-					<?php } ?>
+			<?php if ($row['type'] != 'comment') { ?>
+				<div class="outer-post-container">
+					<div class="picture">
+						<img src="<?php echo base_url() . $row['profile_pic']; ?>" height="35" width="35"/>
+						<p class="author"><a href="<?php echo base_url() . $row['author'];?>" ><?php echo $row['author']; ?></a></p>
+					</div> 				
 					
 					
 					
+						<?php if ($row['title'] != '') { ?>
+							<div id="<?php echo $row['sid']; ?>"class="post-container">
+								<h2><a href="<?php echo $row['url']; ?>" class="post-title"><?php echo $row['title']; ?></a></h2>
+								<div class="post-body-container">
+									<p class="body"><?php echo $row['body']; ?></p>
+									<p class="comments"><a href="<?php echo $row['url']; ?>" >Comments[<?php echo $row['ncomments'];?>] Shares[<?php echo $row['nshares'];?>]</a></p>
+								</div>
+							</div>
+						<?php } else { ?>
+							<div id="<?php echo $row['sid']; ?>"class="little-post-container">
+								<div class="post-body-container">
+									<p class="little-body"><?php echo $row['body']; ?></p>
+									<p class="little-comments"><a href="<?php echo $row['url']; ?>" >Comments[<?php echo $row['ncomments'];?>] Shares[<?php echo $row['nshares'];?>]</a></p>
+								</div>
+							</div>
+						<?php } ?>
+						
+						
+						
 				</div>
-			</div>
+			<?php } ?>
 			
 			
 		<?php } ?>

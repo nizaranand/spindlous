@@ -48,6 +48,18 @@ Class Spindlet extends CI_Model {
 		
 	}
 	
+	public function get_comments($sid) {
+		
+		return $this->mongo_db->where(array("root" => $sid, "type" => "comment"))->get("spindlets");
+		
+	}
+	
+	public function get_shares($sid) {
+	
+		return $this->mongo_db->where(array("root" => $sid, "type" => "share"))->get("spindlets");
+	
+	}
+	
 	public function sid_exists($sid) {
 		
 		return ( $this->mongo_db->where(array('sid' => $sid))->count('spindlets') > 0 );		
@@ -96,6 +108,18 @@ Class Spindlet extends CI_Model {
 		
 		$this->mongo_db->where(array('sid' => $sid))->set($data)->update('spindlets');
 		
+	}
+	
+	public function increment($sid, $field) {
+	
+		$this->mongo_db->where(array('sid' => $sid))->set(array($field => 1))->update('spindlets');
+	
+	}
+	
+	public function decrement($sid, $field) {
+	
+		$this->mongo_db->where(array('sid' => $sid))->dec(array($field => 1))->update('spindlets');
+	
 	}
 	
 }

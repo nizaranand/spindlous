@@ -459,7 +459,6 @@ p.author {
 .post-container {
 
 	min-height: 60px;
-
 	background-color: #FFFFFF;
 	border-top: 1px solid #FFFFFF;
 	border-bottom: 1px solid #EEEEEE;
@@ -469,9 +468,33 @@ p.author {
 	
 }
 
+.little-post-container {
+	min-height: 60px;
+	background-color: #FFFFFF;
+	border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #EEEEEE;
+	padding: 0px 15px 5px 5px;
+	margin: 0px 0px 0px 125px;
+	width: 625px;
+}
+
+.little-post-container:hover{
+	-webkit-box-shadow:inset 0px 0px 5px #EEE;
+	-moz-box-shadow:inset 0px 0px 5px #EEE;
+	box-shadow:inset 0px 0px 5px #EEE;
+}
+
+.little-post-container a{
+	color: #444444;
+}
+
+.little-post-container a:hover{
+	color: #666666;
+}
+
 .post-container-1 {
 
-	min-height: 60px;
+	min-height: 20px;
 	background-color: #FFFFFF;
 	padding: 20px;
 	margin: 0px 0px 0px 125px;
@@ -485,6 +508,7 @@ p.author {
 .post-container-1 h2 {
 	
 	color: #BD2031;
+	font-size: 18px;
 	margin: 5px 0px 0px 0px;
 	
 }
@@ -600,6 +624,51 @@ ul {
 	border-top-right-radius: 4px;
 }
 
+.menu-item {
+	background-color: white;
+	color: black;
+	border-top: 1px solid #AAA;
+	border-right: 1px solid #AAA;
+	border-left: 1px solid #AAA;
+	padding: 8px 8px 5px 8px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.menu-item:hover {
+
+	background-color: #EEE;
+
+}
+
+.menu-item a {
+	padding: 8px 8px 6px 8px;
+	text-decoration: none;
+	color: black;
+	font-weight: normal;
+}
+
+.active-menu-item {
+	font-weight: bold;
+	text-decoration: bold;
+	color: black;
+	padding: 8px 8px 6px 8px;
+	background-color: white;
+	border-top: 1px solid #AAA;
+	border-right: 1px solid #AAA;
+	border-left: 1px solid #AAA;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
 .label {
 
 	float: left;
@@ -630,7 +699,7 @@ ul {
 }
 
 .little-comments {
-	margin: 30px 0 0 0;
+	margin: 0 0 0 15px;
 	color: #444444;
 	font-size: 10px;
 	display: none;
@@ -666,7 +735,7 @@ ul {
 
 .little-body {
 	color: #777777;
-	margin: 15px 5px 5px 0px;
+	margin: 15px 5px 5px 15px;
 }
 
 .close {
@@ -680,6 +749,165 @@ ul {
 .new_user a{
 	color: #444;
 	
+}
+
+.new_comment_submit {
+	margin: 15px;
+}
+
+.new-comment-container {
+	
+	width: 850px;
+	border-bottom: 1px solid #AAA;
+
+}
+
+.inner-comment-container {
+	margin-left: 30px;
+}
+
+.new_comment_input{
+	margin: 15px 15px 0px 0px;
+}
+
+.new_comment {
+	margin: 15px 15px 15px 0px;
+}
+
+.input_container {
+	display: none;
+}
+
+.hidden {
+	display: none;
+}
+
+.visible {
+	display: block;
+}
+
+#tabs {
+
+	list-style-type:none;
+	margin: 0;
+	
+
+}
+
+#tabs li {
+	display: inline;
+}
+
+#tabs p{
+	margin: 0;
+	padding: 0;
+}
+
+.reply {
+	margin: 0px 5px 5px 0px;
+}
+
+.reply a {
+	color: #444444;
+	font-size: 10px;
+	
+}
+
+.add_comment {
+
+	margin: 0;
+
+}
+
+.comment_body {
+	margin: 0px;
+}
+
+.comment_author a {
+	color: #444444;
+	font-size: 10px;	
+}
+
+.comment_author a:hover {
+	text-decoration: underline;
+}
+
+.reply a:hover {
+	text-decoration: underline;
+}
+
+.comment_author {
+	margin: 0 0 5px 0;
+}
+
+.comment_body {
+	color: #777777;
+}
+
+.comment-rating {
+	float: left;
+}
+
+.upvote {
+	color: black;
+	text-align: center;
+	margin: 0 0 0 5px;	
+	font-size: 20px;
+	cursor:pointer;	
+}
+
+.downvote {
+	color: black;
+	text-align: center;
+	margin: 0 0 0 5px;	
+	font-size: 25px;
+	cursor:pointer;
+}
+
+.upvote:hover {
+	background-color: #DDD;	
+}
+
+.downvote:hover {
+	background-color: #DDD;	
+}
+
+.clicked_upvote {
+	color: red;
+	text-align: center;
+	margin: 0 0 0 5px;	
+	font-size: 20px;
+	cursor:pointer;	
+}
+
+.clicked_downvote {
+	color: red;
+	text-align: center;
+	margin: 0 0 0 5px;	
+	font-size: 25px;
+	cursor:pointer;
+}
+
+.clicked_upvote:hover {
+	background-color: #DDD;	
+}
+
+.clicked_downvote:hover {
+	background-color: #DDD;	
+}
+
+.disabled_upvote {
+	color: grey;
+	text-align: center;
+	margin: 0 0 0 5px;	
+	font-size: 20px;	
+}
+
+.disabled_downvote {
+	color: grey;
+	text-align: center;
+	margin: 0 0 0 5px;	
+	font-size: 25px;
 }
 
 
