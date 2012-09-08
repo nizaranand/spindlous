@@ -114,6 +114,7 @@ $autoload['language'] = array();
 
 $autoload['model'] = array('User', 'Spindlet', 'Spindle_Url');
 require_once('application/models/current_user.php');
+require_once('application/libraries/Comment_Node.php');
 
 
 /* End of file autoload.php */

@@ -1,5 +1,4 @@
-<?php
-
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Saved_links extends CI_Controller {
 
 	function __construct()

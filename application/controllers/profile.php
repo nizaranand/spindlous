@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Profile extends CI_Controller {
 
@@ -35,6 +35,7 @@ class Profile extends CI_Controller {
 						         'spool'  => $s,
 								 'type'   => 'other');
 		$this->load->view('includes/tempalte', $data);
+	
 	
 	}
 

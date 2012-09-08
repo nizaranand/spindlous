@@ -2,7 +2,7 @@ body {
 	font-family:Arial;
 	font-size: 14px;
 	/*background-color: #E6E8FA;*/
-	backgorund-color: #FFFFFF;
+	background: url(../images/xScnV.jpg);
 	color: #aaaaaa;
 }
 
@@ -129,25 +129,46 @@ span.time {
 	position:absolute;
 	top: 0;
 	left: 0;
-	padding: 0px
-	height: 40px;
+	padding: 0px;
+	height: 20px;
 	display: block;
 	text-align: center;
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0.24, rgb(36,36,36)),
-		color-stop(0.62, rgb(66,66,66))
-		);
-	   -moz-box-shadow: 0 0 5px 5px #DDD;
-	-webkit-box-shadow: 0 0 5px 5px #DDD;
-	        box-shadow: 0 0 5px 5px #DDD;
+	background-color: rgba(0,0,0,.2);
 
 }
 
 #top-bar a{
 	color: #FFF;
+}
+
+#top-bar p{
+	color: #FFF;
+	margin:2px 0px;
+	padding:0px;
+}
+#container1 {
+	float: left;
+	width: 75%;
+}
+
+#container2 {
+	float: right;
+	width: 25%;
+}
+
+#container3 {
+	float: right;
+	width: 67%;
+}
+
+#user_control_box{
+	float: left;
+	width: 50%;
+}
+
+#logout {
+	float: right;
+	width: 50%;
 }
 #link-input {
 	margin-left: auto;
@@ -173,7 +194,7 @@ span.time {
 
 #spindlous p{
 	margin: 0px;
-	padding: 10px;
+	padding: 0px;
 }
 
 #spindlous a {
@@ -194,30 +215,7 @@ span.time {
 	text-decoration:none;
 }
 
-#container1 {
-	float: left;
-	width: 75%;
-}
 
-#container2 {
-	float: right;
-	width: 25%;
-}
-
-#container3 {
-	float: right;
-	width: 67%;
-}
-
-#user_control_box{
-	float: left;
-	width: 50%;
-}
-
-#logout {
-	float: right;
-	width: 50%;
-}
 
 #spool {
 	margin-left: auto;
@@ -351,7 +349,7 @@ input, textarea, select {
 
 #signup_form form {
 
-	background-color: #454545;
+	background-color: rgba(0,0,0,.3);
 	padding: 10px;
 
 	border-radius: 8px;
@@ -524,6 +522,8 @@ p.author {
 	padding: 15px 15px 15px 15px;
 	margin-top: 0px;
 	margin-left: 125px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
 	height: 2px;
 	width: 615px;
 
@@ -537,6 +537,7 @@ p.author {
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
 	height: 30px;
+	width:615px;
 
 }
 
@@ -716,11 +717,11 @@ ul {
 }
 
 .picture a {
-	color: #444;
+	color: #FFF;
 }
 
 .picture a:hover {
-	color: #666;
+	color: #FFF;
 }
 .edit {
 
@@ -910,5 +911,135 @@ ul {
 	font-size: 25px;
 }
 
+/********************** Users page *****************************/
 
+.content-container {
+	margin:50px auto;
+	padding:20px;
+	width:1000px;
+	background-color: rgba(0,0,0,.2);
+}
+
+.content-container .user-header {
+	background-color: rgba(100,100,100,.5);
+}
+
+.content-container .user-header h3 {
+	margin:0px;
+	color:#FFF;
+	text-shadow: 2px 2px 2px #000;
+}
+
+.content-container .user-header .left-side {
+	float:left;
+	padding:5px;
+}
+
+.content-container .user-header .right-side {
+	float:right;
+}
+
+.content-container .user-header .right-tab {
+	margin:0px;
+	float:right;
+	padding:7px 5px;
+	cursor:pointer;
+}
+
+.content-container .user-header .selected {
+	background-color:#FFF;
+	cursor:default;
+}
+
+.content-container .user-header .unselected:hover {
+	background-color: rgba(100,100,100,.5);
+}
+
+.users-outer-container {
+	padding:20px;
+	background-color:#FFF;
+}
+
+.users-outer-container .user-filter-container {
+	width:100%;
+	margin-bottom:10px;
+}
+
+.users-outer-container .user-filter-container .search-label{
+	margin:4px 0px;
+	float:left;
+}
+
+.users-outer-container .user-filter-container .user-search-input {
+	float:left;
+}
+
+.users-outer-container .users-inner-container {
+	height:640px;
+}
+
+.users-outer-container .users-inner-container .user-column {
+	float:left;
+	height:640px;
+}
+
+.users-outer-container .user-pages-container {
+	margin-top:20px;
+}
+
+.users-outer-container .user-pages-container .inner-pages-container {
+	float:right;
+	margin-right:13px;
+}
+
+.users-outer-container .user-pages-container .inner-pages-container .pagination-button {
+	float:left;
+}
+
+.users-outer-container .user-pages-container .inner-pages-container .page_number {
+	border:1px solid #CDCDCD;
+	padding:4px;
+	margin:2px;
+}
+
+.users-outer-container .user-pages-container .inner-pages-container .previous_button,
+.users-outer-container .user-pages-container .inner-pages-container .next_button {
+	border:1px solid #CDCDCD;
+	padding:4px;
+	margin:2px;
+}
+
+.users-outer-container .user-pages-container .inner-pages-container .ellipses {
+	padding:4px;
+	margin:2px;
+}
+
+.users-outer-container .user-pages-container .inner-pages-container .active {
+	background-color:#CDCDCD;
+	color:#FFF;
+	padding:5px;
+	margin:2px;
+}
+
+.user-container {
+	width:179px;
+	height:70px;
+	border:1px solid #CDCDCD;
+	margin:0px 10px 10px 0px;
+}
+
+.user-container .pic {
+	height:50px;
+	width:50px;
+	float:left;
+}
+
+.user-container .pic img {
+	height:50px;
+	width:50px;
+}
+
+.user-container .info {
+	float:left;
+}
 

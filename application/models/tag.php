@@ -8,21 +8,25 @@ class Tag extends CI_Model {
 		
 	}
 	
-	function add($name) {
+	function add($data) {
 		
-		if ($this->exists($name)) {
-			$this->mongo_db->where(array('name' => $name))->inc(array('saved' => 1))->update('tags');
+		if ($this->exists($data['name'])) {
+			$this->mongo_db->where(array('name' => $data['name']))->inc(array('saved' => 1))->update('tags');
+			if(isset($data['post_id'])) {
+				$this->mongo_db->where(array('name' => $data['name']))->push(array('posts' => $data['post_id']))->update('tags');
+			}
 		} else {
-			$data = array('name' => $name, 'saved' => 1, 'first_saved' => date('m-d-Y H:i:s'));
-			$this->mongo_db->insert('tags', $data);
+			$tag_data = array('name' => $data['name'], 'posts' => array($data['post_id']),'saved' => 1, 'first_saved' => date('m-d-Y H:i:s'));
+			$this->mongo_db->insert('tags', $tag_data);
 		}
 		
 	}
 	
-	function remove($name) {
+	function remove($data) {
 		
 		if ($this->exists($name)) {
-			$this->mongo_db->where(array('name' => $name))->dec(array('saved' => 1))->update('tags');
+			$this->mongo_db->where(array('name' => $data['name']))->dec(array('saved' => 1))->update('tags');
+			$this->mongo_db->where(array('name' => $data['name']))->pop(array('posts' => $data['post_id']))->update('tags');
 		}
 		
 	}
@@ -48,7 +52,6 @@ class Tag extends CI_Model {
 		}
 		
 	}
-
 }
 
 ?>

@@ -8,7 +8,7 @@ class Comment_Node {
 	public $children = Array();
 	public $size;
 	public $vote;
-	
+
 	public function __construct($comment, $carray, $votes, $user) {
 		
 		$this->comment  = $comment;

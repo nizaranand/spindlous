@@ -41,37 +41,43 @@
 $route['default_controller'] = "home";
 $route['404_override'] = '';
 
+$route[''] = '';
 $route['ajax'] = 'ajax';
 $route['api'] = 'api';
+$route['debug'] = 'debug';
+$route['feed'] = 'feed';
 $route['home'] = 'home';
 $route['login'] = 'login';
 $route['logout'] = 'logout';
+$route['post'] = 'post';
 $route['profile'] = 'profile';
-$route['saved_links'] = 'saved_links';
+$route['s'] = 'spindlets';
+$route['saved'] = 'saved';
+$route['settings'] = 'settings';
 $route['signup'] = 'signup';
-$route['spool'] = 'spool';
 $route['test'] = 'test';
 $route['settings'] = 'settings';
 $route['unit_test'] = 'unit_test';
-$route['post'] = 'post';
+$route['users'] = 'users';
 
 $route['ajax/(:any)'] = 'ajax/$1';
 $route['api/(:any)'] = 'api/$1';
+$route['debug/(:any)'] = 'debug/$1';
+$route['feed/(:any)'] = 'feed/$1';
 $route['home/(:any)'] = 'home/$1';
 $route['login/(:any)'] = 'login/$1';
 $route['logout/(:any)'] = 'logout/$1';
 $route['profile/(:any)'] = 'profile/$1';
-$route['saved_links/(:any)'] = 'saved_links/$1';
-$route['signup/(:any)'] = 'signup/$1';
-$route['spool/(:any)'] = 'spool/$1';
-$route['test/(:any)'] = 'test/$1';
+$route['s/(:any)'] = 'spindlets/$1';
+$route['saved/(:any)'] = 'saved/$1';
 $route['settings/(:any)'] = 'settings/$1';
+$route['signup/(:any)'] = 'signup/$1';
+$route['t/(:any)'] = 'tags/$1';
+$route['test/(:any)'] = 'test/$1';
 $route['unit_test/(:any)'] = 'unit_test/$1';
-$route['post/(:any)'] = 'post/$1';
+$route['users/(:any)'] = 'users/$1';
 
-$route[''] = '';
-
-$route['(:any)'] = 'post/display_by_sid/$1';
+$route['(:any)'] = '';
 
 
 /* End of file routes.php */

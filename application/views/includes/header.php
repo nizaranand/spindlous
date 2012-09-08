@@ -14,10 +14,17 @@
 <div id="top-bar">
 	<div id = "container1">
 		<div id = "spindlous"><p><a href = "<?php echo base_url();?>">Spindlous</a></p></div>
-		<div id = "container3"><p><a href = "<?php echo base_url();?>spool">Spool</a> | 							   
-							   <a href = "<?php echo base_url();?>saved_links">Saved Links</a> | 
-							   <a href = "<?php echo base_url();?>profile">Profile</a> |
-							   <a href = "<?php echo base_url();?>settings">Settings</a></p></div>
+		<div id = "container3">
+			<p>
+				<a href = "<?php echo base_url();?>feed">FEED</a> | 							   
+				<a href = "<?php echo base_url();?>profile">PROFILE</a> | 
+				<a href = "<?php echo base_url();?>tags">TAGS</a> |
+				<a href = "<?php echo base_url();?>users">USERS</a> |
+				<a href = "<?php echo base_url();?>saved">SAVED</a> |
+				<a href = "<?php echo base_url();?>settings">SETTINGS</a> |
+				<a href = "<?php echo base_url();?>about">ABOUT</a>
+			</p>
+		</div>
 	</div>
 	<div id = "container2">
 		<div id = "user_control_box"><p>Hello <em><?php echo $u['username']; ?></em></p></div>
@@ -25,5 +32,20 @@
 	</div>
 </div>
 
+
+<?php else: ?>
+
+<div id="top-bar">
+	<div id = "container1">
+		<div id = "spindlous"><p><a href = "<?php echo base_url();?>">Spindlous</a></p></div>
+		<div id = "container3">
+			<p>
+				<a href = "<?php echo base_url();?>tags">TAGS</a> |
+				<a href = "<?php echo base_url();?>users">USERS</a> |
+				<a href = "<?php echo base_url();?>about">ABOUT</a>
+			</p>
+		</div>
+	</div>
+</div>
 
 <?php endif; ?>

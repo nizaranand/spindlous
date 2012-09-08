@@ -22,7 +22,8 @@ Class Spindlet extends CI_Model {
 		$this->Spindle_Url->add($url_data);
 		$data['profile_pic'] = $this->User->get_picture($data['author']);
 		$data['created'] = date('m-d-Y H:i:s');
-		$data['nshares'] = 0;
+		$data['saves'] = 0;
+		$data['shares'] = 0;
 		$data['upvotes'] = 0;
 		$data['downvotes'] = 0;
 		$data['vote_diff'] = 0;
@@ -104,6 +105,10 @@ Class Spindlet extends CI_Model {
 		}
 		
 	}
+
+	public function get_by_tag($tag_name, $page=1, $posts_per_page=25, $sort_alg=TIMESTAMP_SORT) {
+	}
+
 	public function update($sid, $data) {
 		
 		$this->mongo_db->where(array('sid' => $sid))->set($data)->update('spindlets');

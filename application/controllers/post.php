@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Post extends CI_Controller {
 
@@ -16,7 +16,6 @@ class Post extends CI_Controller {
 	
 	public function display_by_sid($sid) {
 	
-		require('C:\Users\john\work\apache\htdocs\spindlous\application\libraries\Comment_Node.php');
 		$this->load->model("Vote");
 		
 		$s = $this->Spindlet->get(array('sid' => $sid, 'published' => 'true'));
@@ -44,6 +43,8 @@ class Post extends CI_Controller {
 		}
 	
 	}
+
+	
 
 }
 

@@ -2,23 +2,27 @@
 
 class User extends CI_Model {
 		
+	protected $USERS_PER_PAGE = 40;
+
 	function __construct() { 
-	
+
 		parent::__construct();
-		
+
 	}
 	
 	public function signup($data) {
 		
 		$this->load->helper('encryption_helper');
+		$this->load->helper('email_helper');
 		
 		$data['salt'] = get_salt();
 		$data['created'] = date('m-d-Y H:i:s');		
 		$data['password'] = encrypt_pw($data['password'], $data['salt']);		
 		$data['profile_pic'] = "images/silhoeutte.png";
 		$data['full_name'] = "";
+		$data['validated'] = "false";
 		
-		$this->mongo_db->insert('users', $data);	
+		$this->mongo_db->insert('users', $data);
 	}
 	
 	public function authenticate($username, $password) {
@@ -108,6 +112,29 @@ class User extends CI_Model {
 		
 		return $u[0]['profile_pic'];
 	
+	}
+
+	public function validate_email($username) {
+		$this->mongo_db->where(array('username' => $username))->set(array('validated' => 'true'))->update('users');
+	}
+
+	public function get_list($constraints) {
+		$pages = $this->User->get_pages_amount($constraints);
+		if ($constraints['page'] > $pages) {
+			$constraints['page'] = $pages;
+		} else if ($constraints['page'] < 1) {
+			$constraints['page'] = 1;
+		}
+		$total_users = $this->User->get_total($constraints);
+		return $this->mongo_db->offset(($constraints['page'] - 1) * $this->USERS_PER_PAGE)->limit($this->USERS_PER_PAGE)->get('users');
+	}
+
+	public function get_total($constraints) {
+		return $this->mongo_db->count('users');
+	}
+
+	public function get_pages_amount($constraints) {
+		return ceil($this->User->get_total($constraints) / $this->USERS_PER_PAGE);
 	}
 	
 }
