@@ -53,5 +53,3 @@ class Tag extends CI_Model {
 		
 	}
 }
-
-?>

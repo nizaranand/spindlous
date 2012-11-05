@@ -1,144 +1,90 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 if ( ! function_exists('get_pagination_buttons')) {
-    function get_pagination_buttons($page, $total_pages, $data) {
+    function get_pagination_buttons($args) {
     	$buttons = array();
-        
+        $CI = get_instance();
+        $total_pages = $CI->User->get_pages_amount($args);
     	if($total_pages > 9) {
-    		if ($page == 1) {
-    			if ($page != 1) {
-	    			$buttons[] = array(
-	    				"type" => "previous_button",
-	    				"value" => "prev",
-	    				"active" => "inactive",
-                        "url" => format_button_url($page, $page, $data),
-	    			);
+    		if ($args['page'] >= 1 && $args['page'] <= 4) {
+
+    			if ($args['page'] != 1) {
+	    			$buttons[] = get_button_html('previous_page', $args);
 	    		}
     			for($i = 1; $i <= 5; $i++) {
-					$buttons[] = array(
-						"type" => ($i == $page) ? "active_number" : "page_number",
-						"value" => $i,
-						"active" => ($i == $page) ? "active" : "inactive",
-					);
+					$buttons[] = get_button_html((int)$i, $args);
 				}
-    			$buttons[] = array(
-    				"type" => "ellipses",
-    				"value" => "...",
-    				"active" => "inactive",
-                    "url" => "",
-    			);
-    			$buttons[] = array(
-    				"type" => "page_number",
-    				"value" => $total_pages,
-    				"active" => "inactive",
-    			);
-    			$buttons[] = array(
-    				"type" => "next_button",
-    				"value" => "next",
-    				"active" => "inactive"
-    			);
-    		} else if ($page >= 5 && $page <= ($total_pages - 4)) {
-    			$buttons[] = array(
-    				"type" => "previous_button",
-    				"value" => "prev",
-    				"active" => "inactive"
-    			);
-    			$buttons[] = array(
-    				"type" => "page_number",
-    				"value" => 1,
-    				"active" => "inactive"
-    			);
-    			$buttons[] = array(
-    				"type" => "ellipses",
-    				"value" => "...",
-    				"active" => "inactive",
-    			);
-    			for($i = ($page - 2); $i <= ($page + 2); $i++) {
-					$buttons[] = array(
-						"type" => ($i == $page) ? "active_number" : "page_number",
-						"value" => $i,
-						"active" => ($i == $page) ? "active" : "inactive",
-					);
+    			$buttons[] = get_button_html('ellipses', $args);
+    			$buttons[] = get_button_html((int)$total_pages, $args);
+    			$buttons[] = get_button_html('next_page', $args);
+
+    		} else if ($args['page'] >= 5 && $args['page'] <= ($total_pages - 4)) {
+
+                $buttons[] = get_button_html('previous_page', $args);
+    			$buttons[] = get_button_html(1, $args);
+    			$buttons[] = get_button_html('ellipses', $args);
+    			for($i = ($args['page'] - 2); $i <= ($args['page'] + 2); $i++) {
+					$buttons[] = get_button_html((int)$i, $args);
 				}
-    			$buttons[] = array(
-    				"type" => "ellipses",
-    				"value" => "...",
-    				"active" => "inactive",
-    			);
-    			$buttons[] = array(
-    				"type" => "page_number",
-    				"value" => $total_pages,
-    				"active" => "inactive",
-    			);
-    			$buttons[] = array(
-    				"type" => "next_button",
-    				"value" => "next",
-    				"active" => "inactive"
-    			);
+    			$buttons[] = get_button_html('ellipses', $args);
+    			$buttons[] = get_button_html((int)$total_pages, $args);
+    			$buttons[] = get_button_html('next_page', $args);
+
     		} else {
-    			$buttons[] = array(
-    				"type" => "previous_button",
-    				"value" => "prev",
-    				"active" => "inactive"
-    			);
-    			$buttons[] = array(
-    				"type" => "page_number",
-    				"value" => 1,
-    				"active" => "inactive"
-    			);
-    			$buttons[] = array(
-    				"type" => "ellipses",
-    				"value" => "...",
-    				"active" => "inactive",
-    			);
+
+    			$buttons[] = get_button_html('previous_page', $args);
+    			$buttons[] = get_button_html(1, $args);
+    			$buttons[] = get_button_html('ellipses', $args);
     			for($i = ($total_pages - 4); $i <= $total_pages; $i++) {
-					$buttons[] = array(
-						"type" => ($i == $page) ? "active_number" : "page_number",
-						"value" => $i,
-						"active" => ($i == $page) ? "active" : "inactive",
-					);
+					$buttons[] = get_button_html((int)$i, $args);
 				}
-    			if ($page != $total_pages) {
-	    			$buttons[] = array(
-	    				"type" => "next_button",
-	    				"value" => "next",
-	    				"active" => "inactive"
-	    			);
+    			if ($args['page'] != $total_pages) {
+	    			$buttons[] = get_button_html('next_page', $args);
 	    		}
    			}
-
     	} else {
-    		if ($page != 1) {
-    			$buttons[] = array(
-    				"type" => "previous_button",
-    				"value" => "prev",
-    				"active" => "inactive"
-    			);
+    		if ($args['page'] != 1) {
+    			$buttons[] = get_button_html('previous_page', $args);
     		}
     		for($i = 1; $i <= $total_pages; $i++) {
-    			$buttons[] = array(
-    				"type" => ($i == $page) ? "active_number" : "page_number",
-    				"value" => $i,
-    				"active" => ($i == $page) ? "active" : "inactive",
-    			);
+    			$buttons[] = get_button_html((int)$i, $args);
     		}
-    		if ($page != $total_pages) {
-    			$buttons[] = array(
-    				"type" => "next_button",
-    				"value" => "next",
-    				"active" => "inactive"
-    			);
+    		if ($args['page'] != $total_pages) {
+    			$buttons[] = get_button_html('next_page', $args);
     		}
     	}
     	return $buttons;
     }
 }
 
-if ( ! function_exists('format_button_url')) {
-    function format_button_url($current_page, $button_page, $data) {
-        $filter = '&filter=' . $data['filter'];
-        $tab = '&tab=' . $data['tab'];
-        $search = ($data['search'] == '') ? '' : ('&search=' . $data['search']);
+if ( ! function_exists('get_button_html')) {
+    function get_button_html($button, $args) {
+        //Construct the argument string for the URL:
+        $arg_string = "&";
+        foreach ($args as $key => $arg) {
+            if ($arg != "" && $key != "page") {
+                $arg_string = $arg_string . $key . "=" . $arg . "&";
+            }
+        }
+        $arg_string = substr($arg_string, 0, -1);
+        $current_page = $args['page'];
+        if (is_int($button)) {
+            if ($button == $current_page) {
+                return "<div class='pagination-button page-number active'>" . $button . "</div>";
+            } else {
+                return "<div class='pagination-button page-number'><a href='" . base_url() ."users?page=" . $button . $arg_string . "'>" . $button . "</a></div>";
+            }
+        } else {
+            switch($button) {
+                case 'previous_page':
+                    return "<div class='pagination-button next-button'><a href='" . base_url() ."users?page=" . ($current_page - 1) . $arg_string . "'>prev</a></div>";
+                case 'ellipses':
+                    return "<div class='pagination-button ellipses'>...</div>";
+                case 'next_page': 
+                    return "<div class='pagination-button next-button'><a href='" . base_url() ."users?page=" . ($current_page + 1) . $arg_string . "'>next</a></div>";
+                default: return "";
+            } 
+        }
     }
 }
-        
+

@@ -1,3 +1,7 @@
+home_vars = {
+	url : "http://localhost/spindlous/" 
+};
+
 function positionPopup(e) {
 	
 	
@@ -375,6 +379,34 @@ $(document).ready(function() {
 			}
 		});
 		
+	});
+
+	/******************* Users page ********************/
+
+	$(".user-search-input").bind('keypress', function(event) {
+		var code = (event.keyCode ? event.keyCode : event.which);
+		var query = $(".user-search-input").val();
+		if(code == 13 && query != "") {
+			var rgx = /[^\w\.@-]/;
+			query = query.replace(rgx, "");
+			var url = document.URL;
+			rgx = /page=[0-9]+&*/;
+			url = url.replace(rgx, "");
+			rgx = /&*search=[a-zA-Z0-9]+/;
+			url = url.replace(rgx, "");
+			rgx = /users\?/;
+			if (url.match(rgx)) {
+				rgx = /users\?./
+				if (url.match(rgx)) {
+					url = url + "&search=" + query;	
+				} else {
+					url = url + "search=" + query;
+				}
+			} else {
+				url = url + "?search=" + query;
+			}
+			window.location = url;
+		}
 	});
 	
 });

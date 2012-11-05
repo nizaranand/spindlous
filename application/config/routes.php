@@ -75,7 +75,8 @@ $route['signup/(:any)'] = 'signup/$1';
 $route['t/(:any)'] = 'tags/$1';
 $route['test/(:any)'] = 'test/$1';
 $route['unit_test/(:any)'] = 'unit_test/$1';
-$route['users/(:any)'] = 'users/$1';
+$route['users/(:any)'] = 'users/display_by_username/$1';
+$route['create_stuff/(:any)'] = 'create_stuff/$1';
 
 $route['(:any)'] = '';
 

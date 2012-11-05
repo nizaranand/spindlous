@@ -776,6 +776,58 @@ class Mongo_db
 		$this->wheres[$field] = new MongoRegex($regex);
 		return $this;
 	}
+
+	/**
+	 * or_like
+	 * 
+	 * Get the documents where the (string) value of a $field is like a value. The defaults
+	 * allow for a case-insensitive search.
+	 *
+	 * <code>
+	 * $this->mongo_db->or_like('foo', 'bar', 'im', FALSE, TRUE);
+	 * </code>
+	 *
+	 * @param string  $field                 The field
+	 * @param string  $value                 The value to match against
+	 * @param string  $flags                 Allows for the typical regular expression flags:<br>i = case insensitive<br>m = multiline<br>x = can contain comments<br>l = locale<br>s = dotall, "." matches everything, including newlines<br>u = match unicode
+	 * @param boolean $enable_start_wildcard If set to anything other than TRUE, a starting line character "^" will be prepended to the search value, representing only searching for a value at the start of a new line.
+	 * @param boolean $enable_end_wildcard   If set to anything other than TRUE, an ending line character "$" will be appended to the search value, representing only searching for a value at the end of a line.
+	 *
+	 * @access public
+	 * @return object
+	 */
+	public function or_like($likes = array(), $flags = 'i', $enable_start_wildcard = TRUE, $enable_end_wildcard = TRUE)
+	{
+		
+		if (count($likes) > 0) {
+			if ( ! isset($this->wheres['$or']) OR ! is_array($this->wheres['$or']))
+			{
+				$this->wheres['$or'] = array();
+			}
+			foreach($likes as $field => $value) {
+				$field = (string) trim($field);
+				$value = (string) trim($value);
+				$value = quotemeta($value);
+				if ($enable_start_wildcard !== TRUE)
+				{
+					$value = '^' . $value;
+				}
+				
+				if ($enable_end_wildcard !== TRUE)
+				{
+					$value .= '$';
+				}
+				$regex = '/' . $value . '/' . $flags;
+				$this->wheres['$or'][] = array($field => new MongoRegex($regex));
+			}
+		}
+
+		
+		$this->wheres['$or'][] = array($field => new MongoRegex($regex));
+		
+		return $this;
+
+	}
 	
 	/**
 	 * order_by

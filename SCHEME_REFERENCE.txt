@@ -1,0 +1,34 @@
+user : {
+	salt : string
+	created : unix_timestamp		
+	password : encrypt_pw( password , salt )		
+	profile_pic : images/silhoeutte.png
+	blurb : string
+	full_name : string
+	website : string
+	location : string
+	last_login : unix_timestamp
+	profile_views : int
+	validated : boolean
+	influence : int
+	posts_count : int
+	comments_count : int
+	tags_count : int
+	votes_count : int
+	pictures_count : int
+	achievement_score : int
+}
+
+post: {
+	sid : get_unique_id()
+	type : post | comment | share | picture
+	author : string
+	profile_pic : string
+	created : time()
+	saves : int
+	shares : int
+	upvotes : int
+	downvotes : int
+	vote_diff : int
+	comments_count : int
+}

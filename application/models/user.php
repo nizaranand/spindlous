@@ -16,12 +16,24 @@ class User extends CI_Model {
 		$this->load->helper('email_helper');
 		
 		$data['salt'] = get_salt();
-		$data['created'] = date('m-d-Y H:i:s');		
+		$data['created'] = time();		
 		$data['password'] = encrypt_pw($data['password'], $data['salt']);		
 		$data['profile_pic'] = "images/silhoeutte.png";
+		$data['blurb'] = "";
 		$data['full_name'] = "";
+		$data['website'] = "";
+		$data['location'] = "";
+		$data['last_login'] = time();
+		$data['profile_views'] = 0;
 		$data['validated'] = "false";
-		
+		$data['influence'] = 0;
+		$data['posts_count'] = 0;
+		$data['comments_count'] = 0;
+		$data['tags_count'] = 0;
+		$data['votes_count'] = 0;
+		$data['pictures_count'] = 0;
+		$data['achievement_score'] = 0;
+
 		$this->mongo_db->insert('users', $data);
 	}
 	
@@ -126,17 +138,52 @@ class User extends CI_Model {
 			$constraints['page'] = 1;
 		}
 		$total_users = $this->User->get_total($constraints);
-		return $this->mongo_db->offset(($constraints['page'] - 1) * $this->USERS_PER_PAGE)->limit($this->USERS_PER_PAGE)->get('users');
+		$this->mongo_db->offset(($constraints['page'] - 1) * $this->USERS_PER_PAGE)
+		            ->limit($this->USERS_PER_PAGE)
+		            ->order_by(array($constraints['tab'] => 'desc'));
+		
+		if (isset($constraints['search'])) {
+			if ($constraints['search'] != "") {
+				$this->mongo_db->or_like(array('username' => $constraints['search'],
+					                           'full_name' => $constraints['search']));
+			}
+		}
+		return $this->mongo_db->get('users');
 	}
 
 	public function get_total($constraints) {
+
+		if (isset($constraints['search'])) {
+			if ($constraints['search'] != "") {
+				return $this->mongo_db->or_like(array('username' => $constraints['search'],
+					                           'full_name' => $constraints['search']))
+				                      ->count('users');
+			}
+		}
 		return $this->mongo_db->count('users');
 	}
 
 	public function get_pages_amount($constraints) {
 		return ceil($this->User->get_total($constraints) / $this->USERS_PER_PAGE);
 	}
-	
+
+	public function get_all_data($username) {
+		if ($this->User->username_exists($username)) {
+			$data = array();
+			$args = array();
+			$args['username'] = $username;
+			$args['type'] = 'short';
+			$data['user_info'] = $this->User->get_by_username($username);
+			$data['post_history'] = $this->Spindlet->get_post_history($args);
+			$data['influence_history'] = $this->Influence->get_influence_history($args);
+			$data['comment_history'] = $this->Spindlet->get_comment_history($args);
+			$data['share_history'] = $this->Spindlet->get_share_history($args);
+			$data['picture_history'] = $this->Spindlet->get_picture_history($args);
+			$data['vote_history'] = $this->Vote->get_vote_history($args);
+		} else {
+			return false;
+		}
+	}	
 }
 
 ?>
