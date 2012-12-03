@@ -1268,12 +1268,12 @@ class Mongo_db
 	 * @access public
 	 * @return object
 	 */	
-	public function dec($fields = array(), $value = -1)
+	public function dec($fields = array(), $value = 1)
 	{
 		$this->_update_init('$inc');
-		
 		if (is_string($fields))
 		{
+			$value = $value * -1;
 			$this->updates['$inc'][$fields] = $value;
 		}
 		
@@ -1281,6 +1281,7 @@ class Mongo_db
 		{
 			foreach ($fields as $field => $value)
 			{
+				$value = $value * -1;
 				$this->updates['$inc'][$field] = $value;
 			}
 		}

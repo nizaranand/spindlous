@@ -28,7 +28,7 @@ class User_model extends CI_Model {
 		$data['profile_views'] = 0;
 		$data['following'] = 0;
 		$data['followers'] = 0;
-		$data['validated'] = "false";
+		$data['validated'] = FALSE;
 		$data['influence'] = 0;
 		$data['posts_count'] = 0;
 		$data['comments_count'] = 0;
@@ -44,7 +44,7 @@ class User_model extends CI_Model {
 		
 		$this->load->helper('encryption_helper');
 		
-		if ($u = $this->get_by_username($username)) {
+		if ($u = $this->User_model->get_by_username($username)) {
 			if ($u['password'] == encrypt_pw($password, $u['salt'])) {
 				return $u;
 			}
@@ -53,15 +53,19 @@ class User_model extends CI_Model {
 		return FALSE;
 	}
 	
-	public function change_password($username, $old_pw, $new_pw) {
+	public function change_password($data) {
 	
-		$this->load->helper('encryption_helper');
-		
-		if ($u = $this->get_by_username($username)) {
-			if ($u['password'] == encrypt_pw($old_pw, $u['salt'])) {
-				$new_pw = encrypt_pw($new_pw, $u['salt']);
-				$this->update(array('username' => $username), array('password', $new_pw));
-				return TRUE;
+		if (isset($data['username']) && isset($data['old_password']) && isset($data['new_password'])) {
+
+			if ($u = $this->User_model->get_by_username($data['username'])) {
+
+				$this->load->helper('encryption_helper');
+				if ($u['password'] == encrypt_pw($data['old_password'], $u['salt'])) {
+					$new_pw = encrypt_pw($data['new_password'], $u['salt']);
+					$this->update(array('username' => $data['username']), array('password' => $new_pw));
+					return TRUE;
+				}
+				return FALSE;
 			}
 			return FALSE;
 		}
@@ -98,8 +102,12 @@ class User_model extends CI_Model {
 	
 	public function change_pic($username, $picture) {
 	
-		$this->mongo_db->where(array('username' => $username))->set(array('profile_pic' => $picture))->update('users');
-		$this->Post_model->change_pic($username, $picture);
+		if ($this->User_model->username_exists($username)) {
+			$this->mongo_db->where(array('username' => $username))->set(array('profile_pic' => $picture))->update_all('users');
+			$this->Post_model->change_pic($username, $picture);
+			return TRUE;	
+		}
+		return FALSE;
 	
 	}
 	
@@ -117,7 +125,7 @@ class User_model extends CI_Model {
 	
 	public function delete($username) {
 		
-		$this->mongo_db->where(array('username' => $username))->delete('users');
+		$this->mongo_db->where(array('username' => $username))->delete_all('users');
 		
 	}
 	
@@ -130,7 +138,7 @@ class User_model extends CI_Model {
 	}
 
 	public function validate_email($username) {
-		$this->mongo_db->where(array('username' => $username))->set(array('validated' => 'true'))->update('users');
+		$this->mongo_db->where(array('username' => $username))->set(array('validated' => TRUE))->update('users');
 	}
 
 	public function get_list($constraints) {
@@ -183,19 +191,14 @@ class User_model extends CI_Model {
 			$data['user_info']['last_seen_string'] = long_time_formatter($data['user_info']['last_seen']);
 			$args['type'] = 'post';
 			$data['post_history'] = $this->Post_model->get_post_history($args);
-			$data['post_count'] = $this->Post_model->get_post_count($args);
 			$data['influence_history'] = $this->Post_model->get_influence_history($args);
 			$args['type'] = 'comment';
 			$data['comment_history'] = $this->Post_model->get_post_history($args);
-			$data['comment_count'] = $this->Post_model->get_post_count($args);
 			$args['type'] = 'share';
 			$data['share_history'] = $this->Post_model->get_post_history($args);
-			$data['share_count'] = $this->Post_model->get_post_count($args);
 			$args['type'] = 'picture';
 			$data['picture_history'] = $this->Post_model->get_post_history($args);
-			$data['picture_count'] = $this->Post_model->get_post_count($args);
 			$data['vote_history'] = $this->Vote_model->get_by_username($args);
-			$data['vote_count'] = $this->Vote_model->get_count_by_username($args);
 			$data['following'] = $this->Follow_model->following_this_user($username);
 			return $data;
 		} else {
@@ -209,7 +212,7 @@ class User_model extends CI_Model {
 		}
 	}
 
-	public function dec_value($username, $value, $amount = 1) {
+	public function dec_value($username, $value, $amount = 1) {;
 		if ($u = $this->User_model->get_by_username($username)) {
 			$this->mongo_db->where(array('username' => $username))->dec(array($value => $amount))->update('users');
 		}
@@ -218,35 +221,19 @@ class User_model extends CI_Model {
 	/************************** Influence setters **********************/
 
 	public function upvote($username) {
-		if ($u = $this->User_model->get_by_username($username)) {
-			$influence = $u[0]['influence'];
-			$influence = $influence + 10;
-			$this->mongo_db->where(array('username' => $username))->set(array('influence' => $influence))->update('users');
-		}
+		$this->User_model->incr_value($username, "influence", 10);
 	}
 
 	public function downvote($username) {
-		if ($u = $this->User_model->get_by_username($username)) {
-			$influence = $u[0]['influence'];
-			$influence = $influence - 10;
-			$this->mongo_db->where(array('username' => $username))->set(array('influence' => $influence))->update('users');
-		}
+		$this->User_model->dec_value($username, "influence", 10);
 	}
 
 	public function switch_to_upvote($username) {
-		if ($u = $this->User_model->get_by_username($username)) {
-			$influence = $u[0]['influence'];
-			$influence = $influence + 20;
-			$this->mongo_db->where(array('username' => $username))->set(array('influence' => $influence))->update('users');
-		}
+		$this->User_model->incr_value($username, "influence", 20);
 	}
 
 	public function switch_to_downvote($username) {
-		if ($u = $this->User_model->get_by_username($username)) {
-			$influence = $u[0]['influence'];
-			$influence = $influence - 20;
-			$this->mongo_db->where(array('username' => $username))->set(array('influence' => $influence))->update('users');
-		}
+		$this->User_model->dec_value($username, "influence", 20);
 	}
 
 }

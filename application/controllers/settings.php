@@ -74,7 +74,7 @@ class Settings extends CI_Controller {
 			
 			if ( $this->input->post('hidden') == "password" ) {
 			
-				$this->User_model->change_password($u['username'], $this->input->post('current_password'), $this->input->post('new_password'));
+				$this->User_model->change_password(array("username" => $u['username'], "old_password" => $this->input->post('current_password'), "new_password" => $this->input->post('new_password')));
 				redirect('settings');
 			
 			}

@@ -50,6 +50,7 @@ class Post_model extends CI_Model {
 		$data['comments_count'] = 0;
 		$data['tags'] = [];
 		$this->mongo_db->insert('posts', $data);
+		return $data['sid'];
 	}
 	
 	public function get_by_sid($sid) {
@@ -193,6 +194,10 @@ class Post_model extends CI_Model {
 			$vote_diff = $upvotes - $downvotes;
 			$this->mongo_db->where(array('sid' => $sid))->set(array('influence_gain' => $influence, 'downvotes_count' => $downvotes, 'vote_diff' => $vote_diff))->update('posts');
 		}
+	}
+
+	public function change_pic($username, $new_pic) {
+		$this->mongo_db->where(array('author' => $username))->set(array("profile_pic" => $new_pic))->update_all('posts');
 	}
 
 	/************************** History fetch function **********************/
