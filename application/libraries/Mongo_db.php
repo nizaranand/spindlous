@@ -1233,7 +1233,7 @@ class Mongo_db
 	 * @access public
 	 * @return object
 	 */	
-	public function inc($fields = array(), $value = 0)
+	public function inc($fields = array(), $value = 1)
 	{
 		$this->_update_init('$inc');
 		
@@ -1268,7 +1268,7 @@ class Mongo_db
 	 * @access public
 	 * @return object
 	 */	
-	public function dec($fields = array(), $value = 0)
+	public function dec($fields = array(), $value = -1)
 	{
 		$this->_update_init('$inc');
 		

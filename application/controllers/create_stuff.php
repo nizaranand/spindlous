@@ -11,7 +11,7 @@ class Create_Stuff extends CI_Controller {
     		$data = array('username' => "test" . $i,
 			              'email' => "test" . $i . "@test.com",
 			              'password' => "password");						
-			$this->User->signup($data);
+			$this->User_model->signup($data);
     	}
     	
     }

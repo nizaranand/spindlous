@@ -1,6 +1,6 @@
 <?php
 
-Class Email_Validation extends CI_Model {
+class Email_Validation extends CI_Model {
 
 	function __construct()
 	{ 

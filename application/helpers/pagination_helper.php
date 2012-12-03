@@ -4,7 +4,7 @@ if ( ! function_exists('get_pagination_buttons')) {
     function get_pagination_buttons($args) {
     	$buttons = array();
         $CI = get_instance();
-        $total_pages = $CI->User->get_pages_amount($args);
+        $total_pages = $CI->User_model->get_pages_amount($args);
     	if($total_pages > 9) {
     		if ($args['page'] >= 1 && $args['page'] <= 4) {
 

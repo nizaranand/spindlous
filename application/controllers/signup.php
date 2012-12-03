@@ -24,7 +24,7 @@ class Signup extends CI_Controller {
 			$data = array('username' => $this->input->post('username'),
 			              'email' => $this->input->post('email'),
 			              'password' => $this->input->post('password'));						
-			$this->User->signup($data);
+			$this->User_model->signup($data);
 			//$this->Email_Validation->add($data);
 
 			$this->load->view('submit_success');

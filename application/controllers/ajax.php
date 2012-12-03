@@ -13,7 +13,7 @@ class Ajax extends CI_Controller {
 			$data['type'] = $this->input->post('type');
 			$data['parent'] = $this->input->post('parent');
 			$data['root'] = $this->input->post('root');
-			$this->Spindlet->create($data);
+			$this->Post_model->create($data);
 		}
 	}
 	
@@ -28,32 +28,30 @@ class Ajax extends CI_Controller {
 			$data['type'] = $this->input->post('type');
 			$data['parent'] = $this->input->post('parent');
 			$data['root'] = $this->input->post('root');
-			$this->Spindlet->increment($data['parent'], 'ncomments');
+			$this->Post_model->increment($data['parent'], 'comments_count');
 			if ($data['parent'] != $data['root']) {
-				$this->Spindlet->increment($data['root'], 'ncomments');
+				$this->Post_model->increment($data['root'], 'comments_count');
 			}
-			$this->Spindlet->create($data);
+			$this->Post_model->create($data);
 		}
 	}
 	
 	public function upvote() {
 		if($u = Current_User::user()) {
-			$this->load->model("Vote");
-			$this->Vote->upvote($this->input->post("sid"), $u["username"]);
+			$this->Vote_model->upvote($this->input->post("sid"), $u["username"]);
 		}
 	}
 	
 	public function downvote() {
 		if($u = Current_User::user()) {
-			$this->load->model("Vote");
-			$this->Vote->downvote($this->input->post("sid"), $u["username"]);
+			$this->Vote_model->downvote($this->input->post("sid"), $u["username"]);
 		}
 	}
 	
 	public function username_check() {
 		
 		$username = $this->input->post('username');
-		if ( ($this->User->username_exists($username)) || ($this->Spindlet->id_exists($username)) ) {
+		if ( ($this->User_model->username_exists($username)) || ($this->Post_model->id_exists($username)) ) {
 			echo "exists";
 		} else {
 			echo "does_not_exist";
@@ -64,12 +62,32 @@ class Ajax extends CI_Controller {
 	public function email_check() {
 		
 		$email = $this->input->post('email');
-		if ($this->User->email_exists($email)) {
+		if ($this->User_model->email_exists($email)) {
 			echo "exists";
 		} else {
 			echo "does_not_exist";
 		}
 		
+	}
+
+	public function follow() {
+		if($u = Current_User::user()) {
+
+			$data['followee'] = $this->input->post('username');
+			$data['follower'] = $u['username'];
+			$this->Follow_model->add_follower($data);
+
+		}
+	}
+
+	public function unfollow() {
+		if($u = Current_User::user()) {
+
+			$data['followee'] = $this->input->post('username');
+			$data['follower'] = $u['username'];
+			$this->Follow_model->subtract_follower($data);
+			
+		}
 	}
 	
 	public function website_scrape() {

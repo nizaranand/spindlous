@@ -14,7 +14,7 @@
 	var params = { 'username' : document.getElementById('username').value,
 						    'password' : document.getElementById('password').value }
 	
-	$.post('http://localhost/spindlous/api/test', params, function(data) {
+	$.post('http://localhost/slasht/api/test', params, function(data) {
 		alert(data);
 	});
 			

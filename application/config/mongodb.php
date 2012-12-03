@@ -17,7 +17,7 @@
  */
 
 $config['default']['mongo_hostbase'] = 'localhost:27017';
-$config['default']['mongo_database'] = 'spindlous';
+$config['default']['mongo_database'] = 'slasht';
 $config['default']['mongo_username'] = '';
 $config['default']['mongo_password'] = '';
 $config['default']['mongo_persist']  = TRUE;

@@ -1220,7 +1220,7 @@ Hg Tag: 1.6.1</p>
 <li>Improved the URI handler to make it more reliable when the $config['uri_protocol'] item is set to AUTO.</li>
 <li>Moved most of the functions in the Controller class into the Loader class, allowing fewer reserved function names for controllers when running under PHP 5.</li>
 <li>Updated the DB Result class to return an empty array when $query->result() doesn't produce a result.</li>
-<li>Updated the <dfn>input->cookie()</dfn> and <dfn>input->post()</dfn> functions in <a href="./libraries/input.html">Input Class</a> to permit arrays contained cookies that are arrays to be run through the XSS filter.</li>
+<li>Updated the <dfn>input->cookie()</dfn> and <dfn>input->Post_model()</dfn> functions in <a href="./libraries/input.html">Input Class</a> to permit arrays contained cookies that are arrays to be run through the XSS filter.</li>
 <li>Documented three functions from the <a href="./libraries/validation.html">Validation class</a> that were missing from the user guide:  set_select(), set_radio(), and set_checkbox().</li>
 <li>Fixed a bug in the Email class related to SMTP Helo data.</li>
 <li>Fixed a bug in the word wrapping helper and function in the email class.</li>

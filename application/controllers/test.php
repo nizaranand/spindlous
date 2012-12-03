@@ -9,6 +9,7 @@ class Test extends CI_Controller {
 	
 	function index() {
 
-	
+		$this->User_model->incr_value("john", 'followers');
+
 	}
 }

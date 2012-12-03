@@ -143,7 +143,7 @@ span.time {
 
 #top-bar p{
 	color: #FFF;
-	margin:2px 0px;
+	margin:0px;
 	padding:0px;
 }
 #container1 {
@@ -160,6 +160,46 @@ span.time {
 	float: right;
 	width: 67%;
 }
+
+
+#container3 p .link-box {
+	padding:0px;
+	margin:0px;
+	font-family: 'Anaheim', sans-serif;
+
+}
+
+#container3 p .link-box a {
+	padding:0px 4px;
+	font-weight:normal;
+
+}
+
+#container3 p .feed-link {
+	background-color:#282A2E;
+}
+#container3 p .blog-link {
+	background-color:#A54242;
+}
+#container3 p .profile-link {
+	background-color:#DE935F;
+}
+#container3 p .tags-link {
+	background-color:#8C9440;
+}
+#container3 p .users-link {
+	background-color:#5E8D87;
+}
+#container3 p .saved-link {
+	background-color:#5F819D;
+}
+#container3 p .settings-link {
+	background-color:#85678F;
+}
+#container3 p .about-link {
+	background-color:#969896;
+}
+
 
 #user_control_box{
 	float: left;
@@ -184,7 +224,7 @@ span.time {
 	-webkit-border-radius: 4px;
 }
 
-#spindlous {
+#slasht {
 	float: left;
 	width: 25%;
 	font-size:18px;
@@ -192,26 +232,26 @@ span.time {
 	padding: 0px;
 }
 
-#spindlous p{
+#slasht p{
 	margin: 0px;
 	padding: 0px;
 }
 
-#spindlous a {
+#slasht a {
 	color: #FFFFFF;
 	font-weight: bold;
 }
 
-#spindlous a:visited {
+#slasht a:visited {
 	text-decoration:none;
 }
-#spindlous a:hover {
+#slasht a:hover {
 	text-decoration:none;
 }
-#spindlous a:active {
+#slasht a:active {
 	text-decoration:none;
 }
-#spindlous a:link {
+#slasht a:link {
 	text-decoration:none;
 }
 
@@ -1069,7 +1109,7 @@ ul {
 }
 
 .profile-container .bio-container {
-	height:230px;
+	height:250px;
 	background-color:#FFF
 }
 
@@ -1091,6 +1131,11 @@ ul {
 	font-style:italic;
 }
 
+.profile-container .bio-container .left-bio .follow-container input {
+	margin-left:50px;
+	margin-top:10px;
+}
+
 .profile-container .bio-container .right-bio {
 	margin:20px 0px;
 	padding:0px 20px;
@@ -1107,7 +1152,7 @@ ul {
 
 .profile-container .bio-container .about {
 	width:460px;
-	height:190px;
+	height:210px;
 	padding:20px;
 	float:left;
 	background-color:#F5F5F5;

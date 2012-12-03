@@ -1,4 +1,5 @@
 <?php
+
 class Current_User {
 
 	private static $user;
@@ -16,7 +17,7 @@ class Current_User {
 				return FALSE;
 			}
 			
-			if (!($u = $CI->User->get_by_id($user_id))) {
+			if (!($u = $CI->User_model->get_by_id($user_id))) {
 
                 return FALSE;
             }
@@ -32,7 +33,7 @@ class Current_User {
 		self::$user = null;
 		
 		$CI =& get_instance();
-		if ($u = $CI->User->authenticate($username, $password)) {			
+		if ($u = $CI->User_model->authenticate($username, $password)) {			
 				
 			$CI->session->set_userdata(array('user_id'=>$u['_id']) );
 				

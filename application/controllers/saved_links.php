@@ -1,4 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 class Saved_links extends CI_Controller {
 
 	function __construct()
@@ -9,7 +10,7 @@ class Saved_links extends CI_Controller {
 	function index() {
 		if($u = Current_User::user()) {
 					
-			$s = $this->Spindlet->get(array('author' => $u['username'], 'type' => 'link'));
+			$s = $this->Post_model->get(array('author' => $u['username'], 'type' => 'link'));
 			$data = array('main_content' => 'links',
 						  'spool' => $s);
 			$this->load->view('includes/template', $data);
@@ -30,7 +31,7 @@ class Saved_links extends CI_Controller {
 			$data['body'] = $this->input->post('body');
 			$data['tags'] = array();
 			
-			$this->Spindlet->create($data);
+			$this->Post_model->create($data);
 			redirect('/saved_links/');
 			
 		} else {

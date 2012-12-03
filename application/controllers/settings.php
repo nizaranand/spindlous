@@ -67,14 +67,14 @@ class Settings extends CI_Controller {
 			
 				$data['username'] = $this->input->post('username');
 				$data['email'] = $this->input->post('email');
-				$this->User->update(array('username' => $u['username']), $data);
+				$this->User_model->update(array('username' => $u['username']), $data);
 				redirect('settings');
 				
 			}
 			
 			if ( $this->input->post('hidden') == "password" ) {
 			
-				$this->User->change_password($u['username'], $this->input->post('current_password'), $this->input->post('new_password'));
+				$this->User_model->change_password($u['username'], $this->input->post('current_password'), $this->input->post('new_password'));
 				redirect('settings');
 			
 			}
@@ -82,7 +82,7 @@ class Settings extends CI_Controller {
 			if ( $this->input->post('hidden') == "profile" ) {
 			
 				$data['full_name'] = $this->input->post('full_name');
-				$this->User->update(array('username' => $u['username']), $data);
+				$this->User_model->update(array('username' => $u['username']), $data);
 				redirect('settings');
 				
 			}

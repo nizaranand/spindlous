@@ -206,7 +206,7 @@ class CI_Input {
 		}
 		else
 		{
-			return $this->post($index, $xss_clean);
+			return $this->Post_model($index, $xss_clean);
 		}
 	}
 

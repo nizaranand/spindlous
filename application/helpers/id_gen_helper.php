@@ -12,7 +12,7 @@ if ( ! function_exists('get_unique_id')) {
 		
 		$CI =& get_instance();
 		
-		if($CI->Spindlet->sid_exists($id)) {
+		if($CI->Post_model->sid_exists($id)) {
 			return get_unique_id();
 		} else {
 			return $id;

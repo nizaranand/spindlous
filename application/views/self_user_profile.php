@@ -1,7 +1,6 @@
 <div class="profile-container">
 	<div class="profile-header">
 		<h3><?php echo $user_info['username']; ?></h3>
-		<input type="hidden" id="username" value="<?php echo $user_info['username']; ?>" />
 	</div>
 	<div class="bio-container">
 		<div class="left-bio">
@@ -9,13 +8,6 @@
 			<div class="influence-container">
 				<span class="influence"><?php echo $user_info['influence']; ?></span><br />
 				<span class="influence-label">Influence</span>
-			</div>
-			<div class="follow-container">
-				<?php if ($following): ?>
-					<input id="follow-button" type="button" value="Unfollow" />
-				<?php else: ?>
-					<input id="follow-button" type="button" value="Follow" />
-				<?php endif; ?>
 			</div>
 		</div>
 		<div class="right-bio">

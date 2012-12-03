@@ -3,10 +3,10 @@
 <div id="spool">
 
 	<div id = "link-input">
-		<?php echo form_open('home/add_spindlet'); ?>	
+		<?php echo form_open('home/add_post'); ?>	
 	
 			<p>
-				<label form="spindlet:">URL: </label>
+				<label form="post:">URL: </label>
 			</p>
 			<p>
 				<?php $data = array(

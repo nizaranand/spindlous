@@ -16,19 +16,17 @@ class Post extends CI_Controller {
 	
 	public function display_by_sid($sid) {
 	
-		$this->load->model("Vote");
-		
-		$s = $this->Spindlet->get(array('sid' => $sid, 'published' => 'true'));
-		$c = $this->Spindlet->get_comments($sid);
+		$s = $this->Post_model->get(array('sid' => $sid, 'published' => 'true'));
+		$c = $this->Post_model->get_comments($sid);
 		if ($u = Current_User::user()) {
-			$v = $this->Vote->get_by_username($u['username']);
+			$v = $this->Vote_model->get_by_username($u);
 		}
 		if (sizeof($c) > 0) {
 			$c = new Comment_Node($s[0], $c, $v, $u);
 		} else {
 			$c = false;
 		}
-		$sh = $this->Spindlet->get_shares($sid);
+		$sh = $this->Post_model->get_shares($sid);
 		
 		if (sizeof($s) == 1) {
 			$data = array('main_content' => 'post',

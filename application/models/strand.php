@@ -1,6 +1,6 @@
 <?php
 
-Class Strand extends CI_Model {
+class Strand extends CI_Model {
 
 	function __construct()
 	{ 
