@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+       <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 if ( ! function_exists('get_pagination_buttons')) {
     function get_pagination_buttons($args) {
@@ -43,15 +43,17 @@ if ( ! function_exists('get_pagination_buttons')) {
 	    		}
    			}
     	} else {
-    		if ($args['page'] != 1) {
-    			$buttons[] = get_button_html('previous_page', $args);
-    		}
-    		for($i = 1; $i <= $total_pages; $i++) {
-    			$buttons[] = get_button_html((int)$i, $args);
-    		}
-    		if ($args['page'] != $total_pages) {
-    			$buttons[] = get_button_html('next_page', $args);
-    		}
+            if($total_pages > 1) {
+                if ($args['page'] != 1) {
+                    $buttons[] = get_button_html('previous_page', $args);
+                }
+                for($i = 1; $i <= $total_pages; $i++) {
+                    $buttons[] = get_button_html((int)$i, $args);
+                }
+                if ($args['page'] != $total_pages) {
+                    $buttons[] = get_button_html('next_page', $args);
+                }    
+            }
     	}
     	return $buttons;
     }

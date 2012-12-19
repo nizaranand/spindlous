@@ -54,7 +54,7 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'session', 'Mongo_db');
+$autoload['libraries'] = array('database', 'session', 'Mongo_db', 'slasht_globals');
 
 
 /*
@@ -112,7 +112,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('User_model', 'Post_model', 'Url_model' ,'Vote_model', 'Follow_model', 'Tag_model');
+$autoload['model'] = array('User_model', 'Post_model', 'Url_model' ,'Vote_model', 'Follow_model', 'Tag_model', 'Feed_model');
 require_once('application/models/current_user.php');
 require_once('application/libraries/Comment_Node.php');
 

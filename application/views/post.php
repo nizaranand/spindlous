@@ -1,17 +1,31 @@
 <?php $u = Current_User::user(); ?>
 
 <div id="post_container">
+
+	<div class="post-header">
+		<div class="left-side">
+			<div class="username-holder">
+				<h3 class="author"><a href="<?php echo base_url() . $post['author'];?>" ><?php echo $post['author']; ?></a></h3>
+			</div>
+			<div class="title-holder">
+				<?php if ($post['title'] != '') { ?>
+					<h3><a href="<?php echo $post['url']; ?>" class="post-title"><?php echo $post['title']; ?></a></h3>
+				<?php } ?>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div class="right-side">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 	<div class="outer-post-container">
 		<div class="picture">
-			<img src="<?php echo base_url() . $post['profile_pic']; ?>" height="35" width="35"/>
-			<p class="author"><a href="<?php echo base_url() . $post['author'];?>" ><?php echo $post['author']; ?></a></p>
+			<img src="<?php echo base_url() . $post['profile_pic']; ?>"/>
+			
 		</div> 				
 		
 
 		<div id="<?php echo $post['sid']; ?>"class="post-container-1">
-		<?php if ($post['title'] != '') { ?>
-			<h2><a href="<?php echo $post['url']; ?>" class="post-title"><?php echo $post['title']; ?></a></h2>
-		<?php } ?>
 			<div class="post-body-container">
 				<p class="body"><?php echo $post['body']; ?></p>
 			</div>
@@ -24,26 +38,26 @@
 	<div id="tab-container">
 	
 		<?php if ($type == "comments" || $type == "") { ?>
-			<ul id="tabs">
-				<li id="comments-tab" class="active-menu-item" >Comments</li>
-				<li id="shares-tab" class="menu-item" ><a href="/">Shares</a></li>
-				<li id="tags-tab" class="menu-item" ><a href="/">Tags</a></li>
-			</ul>
+			<div id="tabs">
+				<div id="shares-tab" class="menu-item" ><a href="/">Shares</a></div>
+				<div id="tags-tab" class="menu-item" ><a href="/">Tags</a></div>
+				<div id="comments-tab" class="active-menu-item" >Comments</div>
+			</div>
 		<?php } else if ($type == "shares") { ?>
-			<ul id="tabs">
-				<li id="comments-tab" class="menu-item" ><a href="/" >Comments</a></li>
-				<li id="shares-tab" class="active-menu-item" >Shares</li>
-				<li id="tags-tab" class="menu-item" ><a href="/">Tags</a></li>
-			</ul>
+			<div id="tabs">
+				<div id="shares-tab" class="active-menu-item" >Shares</div>
+				<div id="tags-tab" class="menu-item" ><a href="/">Tags</a></div>
+				<div id="comments-tab" class="menu-item" ><a href="/" >Comments</a></div>
+			</div>
 		<?php } else if ($type == "tags") { ?>
-			<ul id="tabs">
-				<li id="comments-tab" class="menu-item" ><a href="/">Comments</a></li>
-				<li id="shares-tab" class="menu-item" ><a href="/">Shares</a></li>
-				<li id="tags-tab" class="active-menu-item" >Tags</li>
-			</ul>
+			<div id="tabs">
+				<div id="shares-tab" class="menu-item" ><a href="/">Shares</a></div>
+				<div id="tags-tab" class="active-menu-item" >Tags</div>
+				<div id="comments-tab" class="menu-item" ><a href="/">Comments</a></div>
+			</div>
 		<?php } ?>
 	
-	
+		<div style="clear:both"></div>
 	</div>
 	
 	<?php if ($type == "comments" || $type == "") { ?>
@@ -61,12 +75,15 @@
 					<input type="button" id="first_new_comment" class="new_comment" value="New Comment"/>
 					<input type="hidden" id="root_comment" value="<?php echo $post['sid']; ?>" />
 					<input type="hidden" id="parent_comment" value="<?php echo $post['sid']; ?>" />
+					<div class="loading-gif hidden"></div>
 				</div>
 			</div>
 		</div>
+		<div class="new-comment-holder">
+		</div>
 		
 		<?php if ($comments) { ?>
-			<?php $this->load->view("comment", array("node" => $comments));  ?>
+			<?php $this->load->view("comment", array("node" => $comments, "odd" => TRUE));  ?>
 		<?php } else { ?>
 				<p>There are no comments yet.</p>
 		<?php } ?>

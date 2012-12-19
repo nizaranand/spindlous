@@ -171,6 +171,7 @@ $(document).ready(function() {
 	});
 	
 	$(".upvote").click(function() {
+
 		$(this).addClass("clicked_upvote");
 		$(this).removeClass("upvote");
 		$(this).next(".clicked_downvote").addClass("downvote");
@@ -187,6 +188,7 @@ $(document).ready(function() {
 	});
 	
 	$(".downvote").click(function() {
+
 		$(this).addClass("clicked_downvote");
 		$(this).removeClass("downvote");
 		$(this).prev(".clicked_upvote").addClass("upvote");
@@ -204,14 +206,24 @@ $(document).ready(function() {
 
 	$('.new_comment').click(function() {
 	
-		$('.input_container').hide();	
-		$(this).parent(".add_comment").prev('.input_container').show();
+		var button = $(this);
+
+		if ( button.val() === "Save" ) {
 		
-		if ( $(this).val() === "Save" ) {
-		
-			var body = $(this).closest(".add_comment_container").children('.input_container').children(".new_comment_input").val();
+			var body = button.closest(".add_comment_container").children('.input_container').children(".new_comment_input").val();
 			
 			if (body != "") {
+
+				button.hide();
+				button.siblings(".loading-gif").show();
+				
+				if(button.attr("id") == "first_new_comment") {
+					button.val("New Comment");
+					button.parent(".add_comment").prev('.input_container').hide();
+				} else {
+					button.parent().siblings(".new_comment_input").hide();
+					button.closest(".input_container").siblings(".reply").hide();
+				}
 				
 				var postData = {
 					
@@ -221,15 +233,27 @@ $(document).ready(function() {
 					"parent"    : $("#parent_comment").val(),
 					"root"      : $("#root_comment").val()
 				
-				}
+				};
 			
 				$.ajax({
 					type: "POST",
 					url: "http://localhost/slasht/ajax/add_comment",
 					data: postData,
 					success: function(data) {
-						$(this).closest('.new-comment-container').hide();
-						
+
+						button.siblings(".loading-gif").hide();
+						button.show();
+						$(".new_comment_input").val("");
+						if(button.attr("id") == "first_new_comment") {
+							button.closest('.new-comment-container').siblings('.new-comment-holder').prepend(data);
+						} else {
+							button.parent().siblings(".new_comment_input").show();
+							button.closest('.input_container').hide();
+							button.closest(".input_container").siblings(".reply").show();
+							button.closest('.comment-body-container').siblings('.new-comment-holder').prepend(data);
+
+						}
+							
 					}
 				});
 
@@ -237,16 +261,23 @@ $(document).ready(function() {
 		
 		} else {
 			$(this).val("Save");
+			$("#parent_comment").val($("#root_comment").val());
+			$('.input_container').hide();
+			button.parent(".add_comment").prev('.input_container').show();
 		}
 	
 	});
 	
 	$('.reply').click(function(event) {
 		$("#first_new_comment").val("New Comment");
-		$('.input_container').hide();	
-		$(this).prev('.input_container').show();
+		var is_hidden = $(this).prev(".input_container").is(":hidden")
+		$('.input_container').hide();
+		console.log(is_hidden);
+		if (is_hidden) {
+			$(this).prev('.input_container').show();
+			$("#parent_comment").val($(this).closest(".outer-comment-container").attr("id"));
+		}
 		event.preventDefault();
-		$("#parent_comment").val($(this).closest(".outer-comment-container").attr("id"));
 	});
 	
 	$('#body').focus(function() {
@@ -255,12 +286,12 @@ $(document).ready(function() {
 	
 	});
 	
-	$('.post-container').mouseover(function() {
+	$('.outer-post-container').mouseover(function() {
 	
 		$(this).find(".comments").show();	
 	});
 	
-	$('.post-container').mouseout(function() {
+	$('.outer-post-container').mouseout(function() {
 		
 		$(this).find(".comments").hide();
 		
@@ -433,5 +464,20 @@ $(document).ready(function() {
 			});	
 			$(this).val("Follow");		
 		}
+	})
+
+	/******************* Login / signup page **********************/
+
+	$(".signup-button").click(function(){
+		$(".login-form").fadeOut(250, function() {
+			$(".signup-form").fadeIn(250);
+		});
+		
+	});
+
+	$(".cancel-signup").click(function(){
+		$(".signup-form").fadeOut(250, function(){
+			$(".login-form").fadeIn(250);
+		});
 	})
 });

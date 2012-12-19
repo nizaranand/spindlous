@@ -9,7 +9,7 @@ class Test extends CI_Controller {
 	
 	function index() {
 
-		$this->User_model->incr_value("john", 'followers');
+		$this->User_model->update(array("username" => "john"), array("profile_pic" => "images/profile_pic.jpg"));
 
 	}
 }

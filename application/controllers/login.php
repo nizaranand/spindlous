@@ -11,8 +11,13 @@ class Login extends CI_Controller {
     }
 	
     public function index() {
-        $data['main_content'] = 'welcome_page';
-		$this->load->view('includes/template', $data);
+
+    	if ($u = Current_User::user()) {
+    		redirect('/blog');
+    	} else {
+    		$this->load->view('welcome_page');
+    	}
+        
     }
 	
 	public function submit() {

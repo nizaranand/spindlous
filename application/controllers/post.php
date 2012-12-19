@@ -20,12 +20,15 @@ class Post extends CI_Controller {
 		$c = $this->Post_model->get_comments($sid);
 		if ($u = Current_User::user()) {
 			$v = $this->Vote_model->get_by_username($u);
-		}
-		if (sizeof($c) > 0) {
-			$c = new Comment_Node($s[0], $c, $v, $u);
+			if (sizeof($c) > 0) {
+				$c = new Comment_Node($s[0], $c, $v, $u);
+			} else {
+				$c = false;
+			}
 		} else {
-			$c = false;
+			
 		}
+		
 		$sh = $this->Post_model->get_shares($sid);
 		
 		if (sizeof($s) == 1) {
@@ -33,7 +36,7 @@ class Post extends CI_Controller {
 						          'post' => $s[0],
 							  'comments' => $c,
 							    'shares' => $sh);
-			$this->load->view('includes/template', $data);	
+			$this->load->view('includes/template', $data);
 		} else {
 		
 			redirect('/');

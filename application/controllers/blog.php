@@ -15,7 +15,9 @@ class Blog extends CI_Controller {
 			$s = $this->Post_model->get(array('author' => $u['username'], 'published' => 'true'));
 			$data = array('main_content'  => 'blog',
 						         'spool'  => $s,
-								 'type'   => 'self');
+								 'type'   => 'self',
+								 'author_info' => $u);
+
 			$this->load->view('includes/template', $data);
 			
 		}

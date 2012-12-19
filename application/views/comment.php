@@ -1,8 +1,10 @@
 <?php if ($u = Current_User::user()) { ?>
 
+	<?php $odd_even = ($odd) ? "odd-comment" : "even-comment"; ?>
+
 	<?php foreach ($node->children as $child) { ?>
-	
-		<div id='<?php echo $child->comment['sid']?>' class='outer-comment-container'>
+
+		<div id='<?php echo $child->comment['sid']?>' class='outer-comment-container <?php echo $odd_even; ?>'>
 		<div class='comment-rating'>
 		<?php if ($u['username'] == $child->comment['author']) { ?>
 			<p class='disabled_upvote'>+</p>
@@ -31,12 +33,17 @@
 						<div class='add_comment_container'>
 							<div class='input_container'>
 								<textarea class='new_comment_input' rows='5' cols='50'></textarea>
-								<div class='add_comment'><input type='button' class='new_comment' value='Save'/></div>
+								<div class='add_comment'>
+									<input type='button' class='new_comment' value='Save'/>
+									<div class="loading-gif hidden"></div>
+								</div>
 							</div>
 							<div class='reply'><a href='/'>reply</a></div>
 						</div>
 				</div>
-				<?php $this->load->view("comment", array("node" => $child)); ?>
+				<div class="new-comment-holder">
+				</div>
+				<?php $this->load->view("comment", array("node" => $child, "odd" => !$odd)); ?>
 			</div>
 		</div>
 	
@@ -46,7 +53,7 @@
 
 	<?php foreach ($node->children as $child) { ?>
 	
-		<div id='<?php echo $child->comment['sid'] ?>' class='outer-comment-container'>
+		<div id='<?php echo $child->comment['sid'] ?>' class='outer-comment-container <?php echo $odd_even; ?>'>
 			<div class='comment-rating'>
 			</div>
 			<div class='inner-comment-container'>
@@ -57,11 +64,14 @@
 						<div class='input_container'>
 							<textarea class='new_comment_input' rows='5' cols='50'></textarea>
 							<div class='add_comment'><input type='button' class='new_comment' value='Save'/></div>
+							<div class="loading-gif hidden"></div>
 						</div>
 						<div class='reply'><a href='/'>reply</a></div>
 					</div>
 				</div>
-				<?php $this->load->view("comment", array("node" => $child)); ?>
+				<div class="new-comment-holder">
+				</div>
+				<?php $this->load->view("comment", array("node" => $child, "odd" => !$odd)); ?>
 			</div>
 		</div>
 	

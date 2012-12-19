@@ -21,18 +21,21 @@ class Ajax extends CI_Controller {
 		if($u = Current_User::user()) {
 			$data['author'] = $u['username'];
 			$data['url'] = $this->input->post('url');
-			$data['title'] = '';
+			$data['root'] = $this->input->post('root');
+			$root_post = $this->Post_model->get_by_sid($data['root']);
+			$data['title'] = $root_post['title'];
 			$data['body'] = $this->input->post('body');
 			$data['tags'] = explode(' ', $this->input->post('tags'));
 			$data['published'] = $this->input->post('published');
 			$data['type'] = $this->input->post('type');
 			$data['parent'] = $this->input->post('parent');
-			$data['root'] = $this->input->post('root');
+			$data['children'] = array();
 			$this->Post_model->increment($data['parent'], 'comments_count');
 			if ($data['parent'] != $data['root']) {
 				$this->Post_model->increment($data['root'], 'comments_count');
 			}
-			$this->Post_model->create($data);
+			$data['sid'] = $this->Post_model->create($data);
+			$this->Post_model->generate_comment_html($data);
 		}
 	}
 	

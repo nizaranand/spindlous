@@ -26,15 +26,8 @@ class User_model extends CI_Model {
 		$data['last_seen'] = time();
 		$data['last_login'] = time();
 		$data['profile_views'] = 0;
-		$data['following'] = 0;
-		$data['followers'] = 0;
 		$data['validated'] = FALSE;
 		$data['influence'] = 0;
-		$data['posts_count'] = 0;
-		$data['comments_count'] = 0;
-		$data['tags_count'] = 0;
-		$data['votes_count'] = 0;
-		$data['pictures_count'] = 0;
 		$data['achievement_score'] = 0;
 
 		$this->mongo_db->insert('users', $data);
@@ -113,13 +106,13 @@ class User_model extends CI_Model {
 	
 	public function username_exists($username) {
 	
-		return ( $this->mongo_db->where(array('username' => $username))->count('users') > 0 );
+		return (bool) ( $this->mongo_db->where(array('username' => $username))->count('users') > 0 );
 	
 	}
 	
 	public function email_exists($email) {
 	
-		return ( $this->mongo_db->where(array('email' => $email))->count('users') > 0 );
+		return (bool) ( $this->mongo_db->where(array('email' => $email))->count('users') > 0 );
 	
 	}
 	
@@ -191,15 +184,24 @@ class User_model extends CI_Model {
 			$data['user_info']['last_seen_string'] = long_time_formatter($data['user_info']['last_seen']);
 			$args['type'] = 'post';
 			$data['post_history'] = $this->Post_model->get_post_history($args);
+			$data['posts_count'] = $this->Post_model->get_post_count($args);
 			$data['influence_history'] = $this->Post_model->get_influence_history($args);
 			$args['type'] = 'comment';
 			$data['comment_history'] = $this->Post_model->get_post_history($args);
+			$data['comments_count'] = $this->Post_model->get_post_count($args);
 			$args['type'] = 'share';
 			$data['share_history'] = $this->Post_model->get_post_history($args);
+			$data['shares_count'] = $this->Post_model->get_post_count($args);
 			$args['type'] = 'picture';
 			$data['picture_history'] = $this->Post_model->get_post_history($args);
+			$data['pictures_count'] = $this->Post_model->get_post_count($args);
 			$data['vote_history'] = $this->Vote_model->get_by_username($args);
+			$data['votes_count'] = $this->Vote_model->get_count_by_username($username);
+			$data['tags_count'] = $this->Tag_model->count_by_name($username);
 			$data['following'] = $this->Follow_model->following_this_user($username);
+			$data['following_count'] = $this->Follow_model->following_count($username);
+			$data['followers_count'] = $this->Follow_model->followers_count($username);
+			
 			return $data;
 		} else {
 			return false;
@@ -218,22 +220,32 @@ class User_model extends CI_Model {
 		}
 	}
 
+	public function update_vote_count($username) {
+		$votes_count = $this->Vote_model->get_count_by_username($username);
+		$this->User_model->update(array("username" => $username), array("votes_count" =>  $votes_count));
+
+	}
+
+	public function touch($username) {
+		$this->User_model->update(array("username" => $username), array("last_seen" =>  time()));
+	}
+
 	/************************** Influence setters **********************/
 
 	public function upvote($username) {
-		$this->User_model->incr_value($username, "influence", 10);
+		$this->User_model->incr_value($username, "influence", VOTE_INFLUENCE_GAIN);
 	}
 
 	public function downvote($username) {
-		$this->User_model->dec_value($username, "influence", 10);
+		$this->User_model->dec_value($username, "influence", VOTE_INFLUENCE_GAIN);
 	}
 
 	public function switch_to_upvote($username) {
-		$this->User_model->incr_value($username, "influence", 20);
+		$this->User_model->incr_value($username, "influence", 2*VOTE_INFLUENCE_GAIN);
 	}
 
 	public function switch_to_downvote($username) {
-		$this->User_model->dec_value($username, "influence", 20);
+		$this->User_model->dec_value($username, "influence", 2*VOTE_INFLUENCE_GAIN);
 	}
 
 }

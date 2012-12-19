@@ -7,9 +7,6 @@ class MY_Session extends CI_Session {
 	
 		parent::__construct();
 		
-		
-				
-		
 	}
 
 	/** 

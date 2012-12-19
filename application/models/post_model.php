@@ -29,9 +29,6 @@ class Post_model extends CI_Model {
 				$url_data['url'] = base_url() . 'i/' . $data['sid'];
 				$data['url'] = $url_data['url'];
 				break;
-			case "link" : 
-			    $url_data['url'] = $data['url'];
-			    break;
 			default:
 				$url_data['url'] = base_url() . $data['sid'];
 				$data['url'] = $url_data['url'];
@@ -48,7 +45,17 @@ class Post_model extends CI_Model {
 		$data['influence_gain'] = 0;
 		$data['vote_diff'] = 0;
 		$data['comments_count'] = 0;
-		$data['tags'] = [];
+
+		if (isset($data['tags'])) {
+			foreach ($data['tags'] as $tag) {
+				if (strlen($tag) > 0) {
+					$tag_data = array("name" => $tag, "sid" => $data['sid']);
+					$this->Tag_model->add($tag_data);
+				}
+			}
+		} else {
+			$data['tags'] = array();
+		}
 		$this->mongo_db->insert('posts', $data);
 		return $data['sid'];
 	}
@@ -82,6 +89,17 @@ class Post_model extends CI_Model {
 		return $this->mongo_db->where(array("root" => $sid, "type" => "share"))->get("posts");
 	
 	}
+
+	public function generate_comment_html($data) {
+
+		$node = new stdClass;
+		$node->children = array();
+		$node->children[] = new stdClass;
+		$node->children[0]->comment = $data;
+		$node->children[0]->children = $data['children'];
+
+		$this->load->view("comment", array("node" => $node));
+	}
 	
 	public function sid_exists($sid) {
 		
@@ -91,25 +109,42 @@ class Post_model extends CI_Model {
 	
 	public function publish($sid) {
 		
-		$this->mongo_db->where(array('sid' => $sid))->set(array('published' => 'true'))->update('posts');
+		$this->mongo_db->where(array('sid' => $sid))->set(array('published' => true))->update('posts');
 		
 	}
 	
 	public function hide($sid) {
 		
-		$this->mongo_db->where(array('sid' => $sid))->set(array('published' => 'false'))->update('posts');
+		$this->mongo_db->where(array('sid' => $sid))->set(array('published' => false))->update('posts');
 		
 	}
 
-	public function add_tag($sid, $tag) {
+	public function add_tag($data) {
 
-		$this->mongo_db->where(array('sid' => $sid))->push('tags', $tag)->update('posts');
+		if(isset($data['sid']) && isset($data['name'])) {
+			$tags = $this->Post_model->get_tags($data['sid']);
+			$does_not_exist = TRUE;
+			if (is_array($tags) && count($tags) > 0) {
+				foreach($tags as $tag) {
+					if ($tag == $data['name']) $does_not_exist = FALSE;
+				}
+			}
+			if ($does_not_exist) {
+				$this->mongo_db->where(array('sid' => $data['sid']))->push('tags', $data['name'])->update('posts');
+				return TRUE;
+			}
+		}
+		return FALSE;
 
 	}
 	
-	public function remove_tag($sid, $tag) {
-		
-		$this->mongo_db->where(array('sid' => $sid))->pull('tags', $tag)->update('posts');
+	public function remove_tag($data) {
+
+		if(isset($data['sid']) && isset($data['name'])) {
+			$this->mongo_db->where(array('sid' => $data['sid']))->pull('tags', $data['name'])->update('posts');
+			return TRUE;	
+		}
+		return FALSE;
 		
 	}
 	
@@ -147,50 +182,50 @@ class Post_model extends CI_Model {
 	}
 
 	public function upvote($sid) {
-		if ($s = get_by_sid($sid)) {
-			$influence = $s[0]['influence_gain'];
-			$upvotes = $s[0]['upvotes_count'];
-			$downvotes = $s[0]['downvotes_count'];
+		if ($s = $this->Post_model->get_by_sid($sid)) {
+			$influence = $s['influence_gain'];
+			$upvotes = $s['upvotes_count'];
+			$downvotes = $s['downvotes_count'];
 			$upvotes++;
-			$influence = $influence + 10;
+			$influence = $influence + VOTE_INFLUENCE_GAIN;
 			$vote_diff = $upvotes - $downvotes;
 			$this->mongo_db->where(array('sid' => $sid))->set(array('influence_gain' => $influence, 'upvotes_count' => $upvotes, 'vote_diff' => $vote_diff))->update('posts');
 		}
 	}
 
 	public function downvote($sid) {
-		if ($s = get_by_sid($sid)) {
-			$influence = $s[0]['influence_gain'];
-			$upvotes = $s[0]['upvotes_count'];
-			$downvotes = $s[0]['downvotes_count'];
+		if ($s = $this->Post_model->get_by_sid($sid)) {
+			$influence = $s['influence_gain'];
+			$upvotes = $s['upvotes_count'];
+			$downvotes = $s['downvotes_count'];
 			$downvotes++;
-			$influence = $influence - 10;
+			$influence = $influence - VOTE_INFLUENCE_GAIN;
 			$vote_diff = $upvotes - $downvotes;
 			$this->mongo_db->where(array('sid' => $sid))->set(array('influence_gain' => $influence, 'downvotes_count' => $downvotes, 'vote_diff' => $vote_diff))->update('posts');
 		}
 	}
 
 	public function switch_to_upvote($sid) {
-		if ($s = get_by_sid($sid)) {
-			$influence = $s[0]['influence_gain'];
-			$upvotes = $s[0]['upvotes_count'];
-			$downvotes = $s[0]['downvotes_count'];
+		if ($s = $this->Post_model->get_by_sid($sid)) {
+			$influence = $s['influence_gain'];
+			$upvotes = $s['upvotes_count'];
+			$downvotes = $s['downvotes_count'];
 			$downvotes--;
 			$upvotes++;
-			$influence = $influence + 20;
+			$influence = $influence + (2 * VOTE_INFLUENCE_GAIN);
 			$vote_diff = $upvotes - $downvotes;
 			$this->mongo_db->where(array('sid' => $sid))->set(array('influence_gain' => $influence, 'upvotes_count' => $upvotes, 'vote_diff' => $vote_diff))->update('posts');
 		}
 	}
 
 	public function switch_to_downvote($sid) {
-		if ($s = get_by_sid($sid)) {
-			$influence = $s[0]['influence_gain'];
-			$upvotes = $s[0]['upvotes_count'];
-			$downvotes = $s[0]['downvotes_count'];
+		if ($s = $this->Post_model->get_by_sid($sid)) {
+			$influence = $s['influence_gain'];
+			$upvotes = $s['upvotes_count'];
+			$downvotes = $s['downvotes_count'];
 			$downvotes++;
 			$upvotes--;
-			$influence = $influence - 20;
+			$influence = $influence - (2 * VOTE_INFLUENCE_GAIN);
 			$vote_diff = $upvotes - $downvotes;
 			$this->mongo_db->where(array('sid' => $sid))->set(array('influence_gain' => $influence, 'downvotes_count' => $downvotes, 'vote_diff' => $vote_diff))->update('posts');
 		}
@@ -204,7 +239,7 @@ class Post_model extends CI_Model {
 
 	public function get_post_history($args) {
 		if (isset($args['limit'])) {
-			if(isset($args['offset']) && isset($args['limit'])) {
+			if(isset($args['offset'])) {
 				return $this->mongo_db->where(array('author' => $args['username'], 'type' => $args['type']))->order_by(array('created' => 'desc'))->limit($args['limit'])->offset($args['offset'])->get('posts');
 			} else {
 				return $this->mongo_db->where(array('author' => $args['username'], 'type' => $args['type']))->order_by(array('created' => 'desc'))->limit($args['limit'])->get('posts');

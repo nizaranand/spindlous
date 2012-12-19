@@ -1,54 +1,68 @@
-<?php if ($type == 'self') { ?>
-	<div id="new-post-button"><a href="/" id="new-post" class="new">New Post</a></div>
-<?php } ?>
+<div id="blog-outer-container">
 
-<div id="profile_container">
+	<div id="blog-content-container">
 
-	<?php if (sizeof($spool) > 0) { ?>
-	
-		<div class="profile-top">
-		</div>
-		
-		<?php foreach ($spool as $row) { ?>
+		<?php if (sizeof($spool) > 0) { ?>
+
+			<?php $first_post = "first-post"; ?>
 			
-			<?php if ($row['type'] != 'comment') { ?>
-				<div class="outer-post-container">
-					<div class="picture">
-						<img src="<?php echo base_url() . $row['profile_pic']; ?>" height="35" width="35"/>
-						<p class="author"><a href="<?php echo base_url() . $row['author'];?>" ><?php echo $row['author']; ?></a></p>
-					</div> 				
-					
-					
-					
+			<?php foreach ($spool as $row) { ?>
+				
+				<?php if ($row['type'] != 'comment') { ?>
+					<div class="outer-post-container <?php echo $first_post; ?>">
+						 <?php $first_post = ""; ?>
 						<?php if ($row['title'] != '') { ?>
 							<div id="<?php echo $row['sid']; ?>"class="post-container">
 								<h2><a href="<?php echo $row['url']; ?>" class="post-title"><?php echo $row['title']; ?></a></h2>
 								<div class="post-body-container">
 									<p class="body"><?php echo $row['body']; ?></p>
-									<p class="comments"><a href="<?php echo $row['url']; ?>" >Comments[<?php echo $row['comments_count'];?>] Shares[<?php echo $row['shares_count'];?>]</a></p>
+									<p class="comments"><a href="<?php echo $row['url']; ?>" >Comments[<?php echo $row['comments_count'];?>]</a> <a href="<?php echo $row['url'] . '?tab=shares'; ?>" >Shares[<?php echo $row['shares_count'];?>]</a></p>
 								</div>
 							</div>
 						<?php } else { ?>
 							<div id="<?php echo $row['sid']; ?>"class="little-post-container">
 								<div class="post-body-container">
 									<p class="little-body"><?php echo $row['body']; ?></p>
-									<p class="little-comments"><a href="<?php echo $row['url']; ?>" >Comments[<?php echo $row['comments_count'];?>] Shares[<?php echo $row['shares_count'];?>]</a></p>
+									<p class="little-comments"><a href="<?php echo $row['url']; ?>" >Comments[<?php echo $row['comments_count'];?>]</a> <a href="<?php echo $row['url'] . '?tab=shares'; ?>" >Shares[<?php echo $row['shares_count'];?>]</a></p>
 								</div>
 							</div>
 						<?php } ?>
-						
-						
-						
-				</div>
+							
+					</div>
+				<?php } ?>
+				
+				
 			<?php } ?>
 			
-			
+			<div class="blog-bottom">
+			</div>
+				
 		<?php } ?>
-		
-		<div class="profile-bottom">
+
+	</div>
+
+	<div id="blog-author-container">
+		<div class="portrait-container">
+			<img src="<?php echo $author_info['profile_pic']; ?>" />
 		</div>
-			
-	<?php } ?>
+		<div class="posts-button button">
+			<p>Posts</p>
+		</div>
+		<div class="pictures-button button">
+			<p>Pictures</p>
+		</div>
+		<div class="comments-button button">
+			<p>Comments</p>
+		</div>
+		<div class="shares-button button">
+			<p>Shares</p>
+		</div>
+		<div class="starred-button button">
+			<p>Starred</p>
+		</div>
+	</div>
+
+	<div style="clear:both"></div>
 
 </div>
 
