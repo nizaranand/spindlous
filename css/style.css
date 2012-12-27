@@ -150,6 +150,11 @@ span.time {
 	width: 67%;
 }
 
+#container4 {
+	margin:0px auto;
+	width:440px;
+}
+
 
 #container3 .link-box {
 	height:14px;
@@ -157,7 +162,7 @@ span.time {
 	padding:0px;
 	margin:0px;
 	font-family: 'Anaheim', sans-serif;
-	float:left;
+	float:right;
 
 }
 
@@ -449,6 +454,10 @@ input, textarea, select {
 	width:260px;
 }
 
+#signup_form .submit-forgot-container a {
+	color:#FFF;
+}
+
 #signup_form .signup-container {
 	padding-top:15px;
 	width:257px;
@@ -540,7 +549,7 @@ input, textarea, select {
 }
 
 #blog-content-container {
-	float:left;
+	float:right;
 	width: 500px;
 	display: block;
 	padding: 5px;
@@ -549,7 +558,7 @@ input, textarea, select {
 
 #blog-author-container {
 	width:240px;
-	float:right;
+	float:left;
 	padding:0px;
 	margin:0px;
 }
@@ -671,7 +680,6 @@ input, textarea, select {
 
 .outer-post-container:hover {
 	background-color:#FAFAFA;
-	border:1px solid #A0A0A0;
 }
 
 .post-container h2 a{
@@ -692,7 +700,6 @@ input, textarea, select {
 }
 
 .outer-post-container {
-	border:1px solid #FFF;
 	background-color:white;
 	margin:5px 0px 0px 0px;
 }
@@ -710,7 +717,7 @@ p.author {
 }
 
 .post-container {
-	min-height: 51px;
+	min-height: 60px;
 	padding: 5px 5px 0px 5px;
 	margin: 0px 0px 0px 0px;
 }

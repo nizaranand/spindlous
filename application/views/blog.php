@@ -1,5 +1,26 @@
 <div id="blog-outer-container">
 
+	<div id="blog-author-container">
+		<div class="portrait-container">
+			<img src="<?php echo $author_info['profile_pic']; ?>" />
+		</div>
+		<div class="posts-button button">
+			<p>Posts</p>
+		</div>
+		<div class="pictures-button button">
+			<p>Pictures</p>
+		</div>
+		<div class="comments-button button">
+			<p>Comments</p>
+		</div>
+		<div class="shares-button button">
+			<p>Shares</p>
+		</div>
+		<div class="starred-button button">
+			<p>Starred</p>
+		</div>
+	</div>
+
 	<div id="blog-content-container">
 
 		<?php if (sizeof($spool) > 0) { ?>
@@ -33,33 +54,9 @@
 				
 				
 			<?php } ?>
-			
-			<div class="blog-bottom">
-			</div>
 				
 		<?php } ?>
 
-	</div>
-
-	<div id="blog-author-container">
-		<div class="portrait-container">
-			<img src="<?php echo $author_info['profile_pic']; ?>" />
-		</div>
-		<div class="posts-button button">
-			<p>Posts</p>
-		</div>
-		<div class="pictures-button button">
-			<p>Pictures</p>
-		</div>
-		<div class="comments-button button">
-			<p>Comments</p>
-		</div>
-		<div class="shares-button button">
-			<p>Shares</p>
-		</div>
-		<div class="starred-button button">
-			<p>Starred</p>
-		</div>
 	</div>
 
 	<div style="clear:both"></div>
